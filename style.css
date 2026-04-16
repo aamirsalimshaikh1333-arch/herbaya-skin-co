@@ -1,0 +1,62 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5fff7;
+  text-align: center;
+}
+
+header {
+  background: #0c5c3d;
+  color: white;
+  padding: 15px;
+}
+
+.hero img {
+  width: 100%;
+  display: block;
+}
+
+.product img {
+  width: 200px;
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #0c5c3d;
+  color: white;
+  text-decoration: none;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+.tracking {
+  margin: 30px;
+}
+
+input {
+  padding: 10px;
+  width: 200px;
+  max-width: 80%;
+}
+
+button {
+  padding: 10px 16px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: white;
+  padding: 15px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: bold;
+}
