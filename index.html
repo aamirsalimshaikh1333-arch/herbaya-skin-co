@@ -773,7 +773,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbzf-myM3hrcn55MGGJBA1hvtkGma_puUWxyKCe2Es1qfsro5YrYJi1rvTWeI1-XsEAcnw/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbw6vv5e365uVxkvXlKgb5dOkzhwrf0It51FwOCwbbwrUriaGAGOLGuzhAGrkkaIs-KK/exec";
 
     const products = [
       {
@@ -978,7 +978,7 @@
       trackingResult.classList.add('show');
       trackingResult.innerHTML = `<p>Checking order...</p>`;
 
-      fetch(`${API_URL}?orderId=${encodeURIComponent(orderId)}`)
+      fetch(`${API_URL}?id=${encodeURIComponent(orderId)}`)
         .then(res => res.json())
         .then(data => {
           if (data.status === "Not Found") {
