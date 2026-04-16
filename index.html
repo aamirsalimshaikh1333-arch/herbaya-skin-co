@@ -6,18 +6,20 @@
   <title>Herbaya Skin Co.</title>
   <style>
     :root {
-      --bg: #fffaf7;
+      --bg: #f7f6f1;
       --card: #ffffff;
-      --text: #2f2a28;
-      --muted: #7a6f69;
-      --primary: #8a5a44;
-      --primary-dark: #6f4735;
-      --accent: #f3dfd6;
-      --border: #eee2db;
-      --shadow: 0 10px 30px rgba(90, 61, 47, 0.08);
+      --text: #223127;
+      --muted: #667564;
+      --primary: #456b4f;
+      --primary-dark: #35523c;
+      --secondary: #8f6a56;
+      --accent: #edf4ea;
+      --accent-soft: #f6efe8;
+      --border: #dce7dc;
+      --shadow: 0 16px 45px rgba(42, 62, 44, 0.08);
       --success: #25d366;
       --danger: #cf4d4d;
-      --dark: #111111;
+      --gold: #d8b36a;
     }
 
     * { box-sizing: border-box; }
@@ -25,8 +27,10 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
       color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(237, 244, 234, 0.9), transparent 28%),
+        linear-gradient(180deg, #fcfdf9 0%, var(--bg) 100%);
     }
 
     a { text-decoration: none; color: inherit; }
@@ -35,22 +39,21 @@
       font: inherit;
       cursor: pointer;
       border: none;
-      border-radius: 999px;
       transition: 0.25s ease;
     }
 
     .container {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1160px, calc(100% - 32px));
       margin: 0 auto;
     }
 
     .navbar {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 250, 247, 0.88);
-      border-bottom: 1px solid var(--border);
+      z-index: 90;
+      backdrop-filter: blur(14px);
+      background: rgba(247, 246, 241, 0.88);
+      border-bottom: 1px solid rgba(69, 107, 79, 0.12);
     }
 
     .nav-inner {
@@ -62,61 +65,101 @@
     }
 
     .brand {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
 
-    .brand small {
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #dfeedd, #f6efe8);
+      box-shadow: inset 0 0 0 1px rgba(69, 107, 79, 0.1);
+      font-size: 1.3rem;
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      line-height: 1;
+    }
+
+    .brand-subtitle {
       display: block;
       color: var(--muted);
-      font-size: 0.76rem;
-      font-weight: 500;
-      margin-top: 2px;
+      font-size: 0.8rem;
+      margin-top: 4px;
     }
 
     .nav-links {
       display: flex;
-      gap: 18px;
       align-items: center;
-      font-size: 0.95rem;
+      gap: 18px;
       color: var(--muted);
+      font-size: 0.95rem;
       flex-wrap: wrap;
     }
 
+    .nav-links a:hover { color: var(--primary); }
+
     .hero {
-      padding: 42px 0 26px;
+      padding: 44px 0 28px;
     }
 
     .hero-grid {
       display: grid;
       grid-template-columns: 1.05fr 0.95fr;
-      gap: 24px;
+      gap: 28px;
       align-items: center;
     }
 
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--primary-dark);
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
     .hero-copy h1 {
-      font-size: clamp(2rem, 5vw, 4rem);
-      line-height: 1.05;
       margin: 0 0 14px;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
 
     .hero-copy p {
+      margin: 0 0 24px;
       color: var(--muted);
+      line-height: 1.8;
       font-size: 1.02rem;
-      line-height: 1.7;
-      margin: 0 0 22px;
-      max-width: 560px;
+      max-width: 590px;
     }
 
     .hero-actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      margin-bottom: 22px;
     }
 
     .btn {
       padding: 13px 20px;
+      border-radius: 999px;
       font-weight: 700;
     }
 
@@ -134,83 +177,135 @@
       border: 1px solid var(--border);
     }
 
-    .btn-dark {
-      background: var(--dark);
-      color: white;
-      box-shadow: var(--shadow);
+    .hero-points {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .btn-dark:hover { transform: translateY(-1px); }
+    .hero-point {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
 
     .hero-media {
-      background: linear-gradient(180deg, #f8efe9, #fefaf8);
+      position: relative;
+      background: linear-gradient(180deg, #eef5eb, #faf7f2);
       border: 1px solid var(--border);
-      border-radius: 28px;
+      border-radius: 30px;
       overflow: hidden;
       box-shadow: var(--shadow);
+      min-height: 100%;
     }
 
     .hero-media img {
       width: 100%;
       height: 100%;
+      min-height: 430px;
       object-fit: cover;
-      min-height: 360px;
+    }
+
+    .hero-badge {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(69, 107, 79, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-badge strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-badge span {
+      color: var(--muted);
+      font-size: 0.88rem;
     }
 
     .section {
-      padding: 26px 0 14px;
+      padding: 28px 0 14px;
     }
 
     .section-header {
+      margin-bottom: 20px;
       display: flex;
-      align-items: end;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 18px;
+      align-items: end;
       flex-wrap: wrap;
     }
 
     .section-header h2 {
       margin: 0;
-      font-size: 1.7rem;
+      font-size: 1.85rem;
     }
 
     .section-header p {
-      margin: 6px 0 0;
+      margin: 8px 0 0;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.7;
+      max-width: 680px;
     }
 
-    .products-grid {
+    .products-grid,
+    .benefits-grid,
+    .ingredients-grid,
+    .reviews-grid,
+    .faq-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
-    .product-card {
+    .products-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .benefits-grid,
+    .ingredients-grid,
+    .reviews-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .product-card,
+    .benefit-card,
+    .ingredient-card,
+    .review-card,
+    .faq-card,
+    .about-box,
+    .usage-box {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 22px;
-      overflow: hidden;
+      border-radius: 24px;
       box-shadow: var(--shadow);
+    }
+
+    .product-card {
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
     .product-image-wrap {
-      background: linear-gradient(180deg, #fff8f5, #f7efeb);
-      padding: 16px;
+      background: linear-gradient(180deg, #f8fbf6, #f7efe9);
+      padding: 18px;
     }
 
     .product-image {
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: contain;
-      border-radius: 18px;
+      border-radius: 20px;
     }
 
     .product-content {
-      padding: 18px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -226,19 +321,20 @@
 
     .product-title {
       margin: 0;
-      font-size: 1.1rem;
+      font-size: 1.12rem;
     }
 
     .product-price {
       font-weight: 800;
       color: var(--primary);
       white-space: nowrap;
+      font-size: 1.05rem;
     }
 
     .product-desc {
       color: var(--muted);
       margin: 0;
-      line-height: 1.65;
+      line-height: 1.7;
       font-size: 0.95rem;
     }
 
@@ -271,65 +367,78 @@
       color: var(--text);
     }
 
-    .about-box,
-    .tracking-box {
-      background: white;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      border-radius: 24px;
+    .benefit-card,
+    .ingredient-card,
+    .review-card,
+    .faq-card {
       padding: 22px;
-      line-height: 1.75;
-      color: var(--muted);
     }
 
-    .about-box strong { color: var(--text); }
-
-    .tracking-form {
+    .icon-pill {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      margin-top: 14px;
-      align-items: center;
+      place-items: center;
+      background: var(--accent);
+      font-size: 1.4rem;
+      margin-bottom: 16px;
     }
 
-    .tracking-form input {
-      width: 100%;
-      padding: 14px 16px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      outline: none;
-      font: inherit;
-      background: #fffdfc;
+    .benefit-card h3,
+    .ingredient-card h3,
+    .review-card h3,
+    .faq-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
     }
 
-    .tracking-form input:focus,
-    .checkout-form input:focus {
-      border-color: #c8a99b;
-      box-shadow: 0 0 0 3px rgba(200, 169, 155, 0.16);
+    .benefit-card p,
+    .ingredient-card p,
+    .review-card p,
+    .faq-card p,
+    .about-box p,
+    .usage-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
     }
 
-    .tracking-result {
-      margin-top: 16px;
-      padding: 16px;
-      border-radius: 18px;
-      background: #faf6f3;
-      color: var(--text);
-      border: 1px solid var(--border);
-      display: none;
+    .about-box,
+    .usage-box {
+      padding: 24px;
     }
 
-    .tracking-result.show {
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .usage-steps {
+      margin: 14px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .stars {
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .reviewer {
       display: block;
-    }
-
-    .tracking-result p {
-      margin: 0 0 8px;
-      line-height: 1.6;
+      margin-top: 14px;
+      font-weight: 700;
+      color: var(--text);
     }
 
     .footer {
-      margin-top: 36px;
-      padding: 26px 0 90px;
+      margin-top: 40px;
+      padding: 28px 0 92px;
       border-top: 1px solid var(--border);
       color: var(--muted);
     }
@@ -339,6 +448,12 @@
       justify-content: space-between;
       gap: 18px;
       flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .floating-cart,
@@ -353,7 +468,7 @@
       color: white;
       font-size: 1.3rem;
       box-shadow: 0 14px 34px rgba(0,0,0,0.16);
-      z-index: 70;
+      z-index: 95;
     }
 
     .floating-cart {
@@ -364,7 +479,7 @@
     .floating-whatsapp {
       bottom: 18px;
       background: var(--success);
-      font-size: 1.5rem;
+      font-size: 1.45rem;
     }
 
     .cart-count {
@@ -387,7 +502,7 @@
       position: fixed;
       inset: 0;
       display: none;
-      z-index: 90;
+      z-index: 120;
     }
 
     .drawer.active,
@@ -396,7 +511,7 @@
     .overlay {
       position: absolute;
       inset: 0;
-      background: rgba(19, 16, 14, 0.45);
+      background: rgba(17, 18, 16, 0.45);
     }
 
     .drawer-panel {
@@ -513,10 +628,15 @@
       background: #fffdfc;
     }
 
+    .checkout-form input:focus {
+      border-color: #9db09e;
+      box-shadow: 0 0 0 3px rgba(157, 176, 158, 0.16);
+    }
+
     .helper-text {
       color: var(--muted);
       font-size: 0.84rem;
-      line-height: 1.5;
+      line-height: 1.55;
       margin-top: 6px;
     }
 
@@ -532,7 +652,7 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: min(680px, calc(100% - 24px));
+      width: min(700px, calc(100% - 24px));
       max-height: 88vh;
       background: #fff;
       border-radius: 24px;
@@ -569,80 +689,83 @@
       line-height: 1.75;
     }
 
-    .product-admin {
-      margin-top: 22px;
-      background: #fff;
-      border: 1px dashed #d8c3b8;
-      border-radius: 20px;
-      padding: 18px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    code {
-      background: #f7f1ed;
-      padding: 2px 6px;
-      border-radius: 8px;
-      color: #5c3a2c;
-      font-size: 0.92em;
-    }
-
-    @media (max-width: 900px) {
+    @media (max-width: 980px) {
       .hero-grid,
-      .info-layout,
-      .products-grid {
+      .products-grid,
+      .benefits-grid,
+      .ingredients-grid,
+      .reviews-grid,
+      .faq-grid,
+      .usage-grid,
+      .info-layout {
         grid-template-columns: 1fr;
       }
 
       .hero-copy { order: 2; }
       .hero-media { order: 1; }
       .nav-links { display: none; }
-      .floating-cart { bottom: 84px; }
-      .tracking-form {
-        grid-template-columns: 1fr;
-      }
     }
 
     @media (max-width: 540px) {
-      .container { width: min(100% - 20px, 1120px); }
-      .hero { padding-top: 22px; }
+      .container { width: min(100% - 20px, 1160px); }
+      .hero { padding-top: 24px; }
+      .brand-title { font-size: 1.08rem; }
+      .brand-subtitle { font-size: 0.72rem; }
       .hero-copy p { font-size: 0.96rem; }
       .product-actions { flex-direction: column; }
       .drawer-panel { width: 100%; }
-      .brand { font-size: 1rem; }
+      .hero-badge {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
     <div class="container nav-inner">
-      <div class="brand">
-        Herbaya Skin Co.
-        <small>Night creams, skin care & hair care essentials</small>
-      </div>
+      <a href="#top" class="brand" aria-label="Herbaya Skin Co.">
+        <div class="brand-mark">🌿</div>
+        <div class="brand-text">
+          <div class="brand-title">Herbaya Skin Co.</div>
+          <span class="brand-subtitle">Skin care & hair care essentials for a refined daily routine</span>
+        </div>
+      </a>
       <div class="nav-links">
         <a href="#products">Products</a>
-        <a href="#tracking">Track Order</a>
-        <a href="#about">About</a>
-        <a href="#add-products">Add More Products</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#how-to-use">How to Use</a>
+        <a href="#faq">FAQ</a>
       </div>
     </div>
   </nav>
 
-  <header class="hero">
+  <header class="hero" id="top">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <h1>Nourish your nights. Glow every morning.</h1>
+        <div class="eyebrow">🌿 Gentle care for skin & hair</div>
+        <h1>Nourish your routine. Wake up looking fresh and cared for.</h1>
         <p>
-          Discover gentle skin care and hair care essentials made for your everyday routine. Our formulas are designed to feel simple, comforting, and effective for daily use.
+          Herbaya Skin Co. brings together skin care and hair care essentials in one clean, premium experience. Designed for everyday comfort, elegant presentation, and easy mobile shopping.
         </p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#products">Shop Now</a>
-          <a class="btn btn-secondary" href="#tracking">Track Order</a>
+          <a class="btn btn-secondary" href="#ingredients">Explore Ingredients</a>
+        </div>
+        <div class="hero-points">
+          <div class="hero-point">For Men & Women</div>
+          <div class="hero-point">Daily Care Routine</div>
+          <div class="hero-point">Simple WhatsApp Ordering</div>
         </div>
       </div>
       <div class="hero-media">
         <img src="https://i.ibb.co/LdDgVX5s/1fdf26ac-7047-4f76-909f-abb2285f24be.png" alt="Herbaya Skin Co. hero banner" />
+        <div class="hero-badge">
+          <strong>Premium everyday care</strong>
+          <span>Clean design, trusted ingredients, and an easy order flow.</span>
+        </div>
       </div>
     </div>
   </header>
@@ -653,55 +776,152 @@
         <div class="section-header">
           <div>
             <h2>Featured Products</h2>
-            <p>Tap on “More Info” to view usage steps and extra details for each product.</p>
+            <p>Explore Herbaya essentials created for a simple skin care and hair care routine. Tap “More Info” to see directions and details.</p>
           </div>
         </div>
         <div class="products-grid" id="productsGrid"></div>
       </div>
     </section>
 
-    <section class="section" id="tracking">
+    <section class="section" id="benefits">
       <div class="container">
         <div class="section-header">
           <div>
-            <h2>Track Your Order</h2>
-            <p>Enter your Order ID to check current order details.</p>
+            <h2>Why customers choose Herbaya</h2>
+            <p>Every part of the experience is built to feel clean, comfortable, and easy to trust.</p>
           </div>
         </div>
-        <div class="tracking-box">
-          <form class="tracking-form" id="trackingForm">
-            <input type="text" id="orderId" placeholder="Enter Order ID (example: HBY1001)" required />
-            <button class="btn btn-dark" type="submit">Track Order</button>
-          </form>
-          <div class="tracking-result" id="trackingResult"></div>
+        <div class="benefits-grid">
+          <article class="benefit-card">
+            <div class="icon-pill">✨</div>
+            <h3>Comfort-first routine</h3>
+            <p>Products designed for daily use with a smooth, easy routine that fits naturally into day and night care.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="icon-pill">🌿</div>
+            <h3>Ingredient-focused care</h3>
+            <p>Key ingredients are presented clearly so customers can understand what goes into the formula and why it matters.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="icon-pill">📦</div>
+            <h3>Mobile-friendly shopping</h3>
+            <p>From browsing to cart to WhatsApp order submission, the full flow is simple and fast on mobile devices.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ingredients">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Highlighted ingredients</h2>
+            <p>Showcasing a few key ingredients helps build trust and gives customers a better understanding of the product.</p>
+          </div>
+        </div>
+        <div class="ingredients-grid">
+          <article class="ingredient-card">
+            <div class="icon-pill">🧪</div>
+            <h3>Niacinamide</h3>
+            <p>Often included in skin care routines for supporting a smoother-looking and more balanced skin appearance.</p>
+          </article>
+          <article class="ingredient-card">
+            <div class="icon-pill">🌼</div>
+            <h3>Kojic Acid Dipalmitate</h3>
+            <p>Commonly used in cosmetic formulations designed for a brighter and more refined overall look.</p>
+          </article>
+          <article class="ingredient-card">
+            <div class="icon-pill">🍃</div>
+            <h3>Botanical extracts</h3>
+            <p>A blend of selected extracts contributes to the product’s premium identity and everyday care feel.</p>
+          </article>
         </div>
       </div>
     </section>
 
     <section class="section" id="about">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <h2>Why people choose Herbaya</h2>
-            <p>Simple routines, clean presentation, and a shopping flow built for mobile users.</p>
-          </div>
-        </div>
+      <div class="container usage-grid">
         <div class="about-box">
-          <strong>Herbaya Skin Co.</strong> is built for customers looking for night creams, skin care, and hair care products in one clean and simple shopping experience. This website includes a product section, a more-information popup for every product, a cart, WhatsApp contact, and order tracking using Google Sheets.
+          <div class="section-header" style="margin-bottom: 14px;">
+            <div>
+              <h2 style="font-size: 1.6rem;">About Herbaya Skin Co.</h2>
+            </div>
+          </div>
+          <p>
+            <strong style="color: var(--text);">Herbaya Skin Co.</strong> is created for customers who want skin care and hair care products in one clean and premium shopping experience. The website is designed to feel modern, elegant, and simple to use, especially on mobile.
+          </p>
+        </div>
+        <div class="usage-box" id="how-to-use">
+          <div class="section-header" style="margin-bottom: 14px;">
+            <div>
+              <h2 style="font-size: 1.6rem;">How to use</h2>
+            </div>
+          </div>
+          <p>For the Herbaya Night Cream, customers can follow these easy steps as part of their regular routine:</p>
+          <ol class="usage-steps">
+            <li>Clean the face properly before application.</li>
+            <li>Take a sufficient amount of cream on fingertips.</li>
+            <li>Apply evenly across the face.</li>
+            <li>Massage gently in circular motion for about 1 minute.</li>
+            <li>Use regularly as part of your night routine.</li>
+          </ol>
         </div>
       </div>
     </section>
 
-    <section class="section" id="add-products">
+    <section class="section" id="reviews">
       <div class="container">
         <div class="section-header">
           <div>
-            <h2>How to add more products later</h2>
-            <p>You can keep using the same website and add more products in a few lines.</p>
+            <h2>What customers love</h2>
+            <p>Testimonials help make the brand feel more trustworthy and give new buyers extra confidence.</p>
           </div>
         </div>
-        <div class="product-admin">
-          Open the <code>index.html</code> file and go to the <code>products</code> array inside the JavaScript section. Copy one product object, paste it below, and edit the fields like <code>name</code>, <code>price</code>, <code>image</code>, <code>description</code>, and <code>steps</code>. The new product will automatically appear on the website without changing the design.
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>The website is very easy to use and the product presentation feels premium. Ordering through WhatsApp was quick and simple.</p>
+            <span class="reviewer">— A happy customer</span>
+          </article>
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>I liked how clearly everything was shown, from product image to usage steps. It feels clean and professional on mobile too.</p>
+            <span class="reviewer">— Verified buyer</span>
+          </article>
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>The design gives a proper skin care brand vibe. It looks much more premium than a basic product page.</p>
+            <span class="reviewer">— Regular shopper</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Frequently asked questions</h2>
+            <p>A helpful FAQ section clears doubts before customers ask them on WhatsApp.</p>
+          </div>
+        </div>
+        <div class="faq-grid">
+          <article class="faq-card">
+            <h3>Who can use Herbaya Night Cream?</h3>
+            <p>It is presented as suitable for both men and women as part of a regular night care routine.</p>
+          </article>
+          <article class="faq-card">
+            <h3>How do I place an order?</h3>
+            <p>Add products to cart, fill in your details, and the order message will open directly in WhatsApp.</p>
+          </article>
+          <article class="faq-card">
+            <h3>Can I add more products later?</h3>
+            <p>Yes. You can expand the same website design by adding more product objects in the JavaScript section.</p>
+          </article>
+          <article class="faq-card">
+            <h3>Is this website mobile friendly?</h3>
+            <p>Yes. The layout, buttons, cart, and ordering flow are all optimized for mobile users.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -709,9 +929,12 @@
 
   <footer class="footer">
     <div class="container footer-grid">
-      <div>
-        <strong>Herbaya Skin Co.</strong><br />
-        Nourish your nights. Glow every morning.
+      <div class="footer-brand">
+        <div class="brand-mark">🌿</div>
+        <div>
+          <strong>Herbaya Skin Co.</strong><br />
+          Refined skin care & hair care essentials.
+        </div>
       </div>
       <div>
         Email: aamirsalimshaikh1319@gmail.com<br />
@@ -725,7 +948,7 @@
     <span class="cart-count" id="cartCount">0</span>
   </button>
 
-  <a class="floating-whatsapp" href="https://wa.me/917507896782?text=Hi%20Herbaya%20Skin%20Co.%2C%20I%20need%20help." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">✆</a>
+  <a class="floating-whatsapp" href="https://wa.me/917507896782" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">✆</a>
 
   <div class="drawer" id="cartDrawer">
     <div class="overlay" data-close-cart></div>
@@ -751,7 +974,7 @@
           <input type="text" id="customerAddress" placeholder="Delivery address" required />
           <button class="btn btn-primary" type="submit">Send Order</button>
           <div class="helper-text">
-            When you click “Send Order”, WhatsApp will open with customer details and selected items.
+            When you click “Send Order”, the order will open directly in WhatsApp with the customer details and selected items.
           </div>
         </form>
       </div>
@@ -773,23 +996,21 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbw6vv5e365uVxkvXlKgb5dOkzhwrf0It51FwOCwbbwrUriaGAGOLGuzhAGrkkaIs-KK/exec";
-
     const products = [
       {
         id: 1,
         name: "Herbaya Night Cream",
         price: 499,
         image: "https://i.ibb.co/X6RCDdG/Herbaya-Skin-Co-skincare-jar.png",
-        description: "A nourishing night cream designed to support soft, healthy-looking skin. Use regularly for 7 days for better results. Suitable for both women and men.",
+        description: "A premium night care essential designed to support a soft, fresh, and healthy-looking appearance as part of your regular routine.",
         category: "Night Care",
         detailsTitle: "How to apply",
         steps: [
-          "Before use, wash your face with a face wash to clean the skin properly.",
+          "Before use, wash your face properly to clean the skin.",
           "Take a sufficient amount of cream on your fingertips.",
           "Apply the cream evenly on the face.",
           "Massage in circular motions for at least 1 minute.",
-          "For better results, use regularly for 7 days.",
+          "Use regularly as part of your night routine.",
           "Suitable for both women and men."
         ]
       }
@@ -808,8 +1029,6 @@
     const infoTitle = document.getElementById('infoTitle');
     const infoPrice = document.getElementById('infoPrice');
     const infoBody = document.getElementById('infoBody');
-    const trackingForm = document.getElementById('trackingForm');
-    const trackingResult = document.getElementById('trackingResult');
 
     function formatPrice(price) {
       return `₹${price.toLocaleString('en-IN')}`;
@@ -850,9 +1069,8 @@
     }
 
     function updateQuantity(productId, change) {
-      cart = cart
-        .map(item => item.id === productId ? { ...item, quantity: item.quantity + change } : item)
-        .filter(item => item.quantity > 0);
+      cart = cart.map(item => item.id === productId ? { ...item, quantity: item.quantity + change } : item)
+                 .filter(item => item.quantity > 0);
       renderCart();
     }
 
@@ -864,12 +1082,11 @@
     function renderCart() {
       const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
       const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
       cartCount.textContent = totalItems;
       cartTotal.textContent = formatPrice(totalPrice);
 
       if (!cart.length) {
-        cartItems.innerHTML = `<div class="empty-cart">Your cart is empty.<br>Add a product to continue.</div>`;
+        cartItems.innerHTML = `<div class="empty-cart">Your cart is empty. Add a product to continue.</div>`;
         return;
       }
 
@@ -878,10 +1095,9 @@
           <img src="${item.image}" alt="${item.name}" />
           <div style="flex:1;">
             <h4>${item.name}</h4>
-            <p>${formatPrice(item.price)} × ${item.quantity} = <strong>${formatPrice(item.price * item.quantity)}</strong></p>
+            <p>${formatPrice(item.price)} × ${item.quantity}</p>
             <div class="cart-item-actions">
               <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
-              <span><strong>${item.quantity}</strong></span>
               <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
               <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
             </div>
@@ -898,11 +1114,12 @@
       infoPrice.textContent = formatPrice(product.price);
       infoBody.innerHTML = `
         <div class="info-layout">
-          <img src="${product.image}" alt="${product.name}" />
           <div>
-            <div class="product-meta">${product.category}</div>
-            <p style="line-height:1.7; color:var(--muted); margin:12px 0 0;">${product.description}</p>
-            <h3 style="margin:16px 0 0;">${product.detailsTitle}</h3>
+            <img src="${product.image}" alt="${product.name}" />
+          </div>
+          <div>
+            <p style="margin-top:0; color: var(--muted); line-height:1.7;">${product.description}</p>
+            <strong>${product.detailsTitle}</strong>
             <ol class="steps">
               ${product.steps.map(step => `<li>${step}</li>`).join('')}
             </ol>
@@ -916,97 +1133,42 @@
       infoModal.classList.remove('active');
     }
 
+    function openCart() {
+      cartDrawer.classList.add('active');
+    }
+
     function closeCart() {
       cartDrawer.classList.remove('active');
     }
 
-    function generateOrderId() {
-      const randomPart = Math.floor(1000 + Math.random() * 9000);
-      return `HBY${randomPart}`;
-    }
+    cartButton.addEventListener('click', openCart);
+    document.querySelectorAll('[data-close-cart]').forEach(el => el.addEventListener('click', closeCart));
+    document.querySelectorAll('[data-close-info]').forEach(el => el.addEventListener('click', closeInfo));
 
-    checkoutForm.addEventListener('submit', function(e) {
+    checkoutForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
       if (!cart.length) {
-        alert('Please add at least one product to the cart.');
+        alert('Your cart is empty. Please add at least one product.');
         return;
       }
 
-      const name = document.getElementById('customerName').value.trim();
-      const phone = document.getElementById('customerPhone').value.trim();
-      const address = document.getElementById('customerAddress').value.trim();
+      const customerName = document.getElementById('customerName').value.trim();
+      const customerPhone = document.getElementById('customerPhone').value.trim();
+      const customerAddress = document.getElementById('customerAddress').value.trim();
 
-      if (!name || !phone || !address) {
-        alert('Please fill all customer details.');
-        return;
-      }
+      const itemsText = cart.map(item => `${item.name} x ${item.quantity} - ${formatPrice(item.price * item.quantity)}`).join(', ');
+      const totalText = formatPrice(cart.reduce((sum, item) => sum + item.price * item.quantity, 0));
+      const whatsappMessage = encodeURIComponent(
+        `New order from Herbaya Skin Co.\n\nCustomer Name: ${customerName}\nPhone: ${customerPhone}\nAddress: ${customerAddress}\nItems: ${itemsText}\nTotal: ${totalText}`
+      );
 
-      const orderId = generateOrderId();
-      const itemsText = cart.map(item =>
-        `• ${item.name} x ${item.quantity} = ${formatPrice(item.price * item.quantity)}`
-      ).join('%0A');
+      window.open(`https://wa.me/917507896782?text=${whatsappMessage}`, '_blank');
 
-      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-      const message =
-        `New Order Request%0A%0A` +
-        `Order ID: ${encodeURIComponent(orderId)}%0A` +
-        `Customer Name: ${encodeURIComponent(name)}%0A` +
-        `Phone: ${encodeURIComponent(phone)}%0A` +
-        `Address: ${encodeURIComponent(address)}%0A%0A` +
-        `Products:%0A${itemsText}%0A%0A` +
-        `Total: ${encodeURIComponent(formatPrice(totalPrice))}`;
-
-      const whatsappURL = `https://wa.me/917507896782?text=${message}`;
-      window.open(whatsappURL, '_blank');
-
-      alert(`Order draft ready. Share this Order ID with customer: ${orderId}`);
-
+      checkoutForm.reset();
       cart = [];
       renderCart();
-      checkoutForm.reset();
       closeCart();
-    });
-
-    trackingForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const orderId = document.getElementById('orderId').value.trim();
-      if (!orderId) return;
-
-      trackingResult.classList.add('show');
-      trackingResult.innerHTML = `<p>Checking order...</p>`;
-
-      fetch(`${API_URL}?id=${encodeURIComponent(orderId)}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "Not Found") {
-            trackingResult.innerHTML = `<p><strong>Order not found ❌</strong></p><p>Please check the Order ID and try again.</p>`;
-            return;
-          }
-
-          trackingResult.innerHTML = `
-            <p><strong>Status:</strong> ${data.status || '-'}</p>
-            <p><strong>Name:</strong> ${data.name || '-'}</p>
-            <p><strong>Product:</strong> ${data.product || '-'}</p>
-          `;
-        })
-        .catch(() => {
-          trackingResult.innerHTML = `<p><strong>Unable to fetch order right now.</strong></p><p>Please try again later.</p>`;
-        });
-    });
-
-    cartButton.addEventListener('click', () => {
-      cartDrawer.classList.add('active');
-    });
-
-    document.querySelectorAll('[data-close-cart]').forEach(el => {
-      el.addEventListener('click', closeCart);
-    });
-
-    document.querySelectorAll('[data-close-info]').forEach(el => {
-      el.addEventListener('click', closeInfo);
     });
 
     renderProducts();
