@@ -1,1 +1,131 @@
-premium update
+const API_URL = "https://script.google.com/macros/s/AKfycbzf-myM3hrcn55MGGJBA1hvtkGma_puUWxyKCe2Es1qfsro5YrYJi1rvTWeI1-XsEAcnw/exec";
+
+function trackOrder() {
+  const orderId = document.getElementById("orderId").value;
+  const resultBox = document.getElementById("result");
+
+  if (!orderId) {
+    resultBox.innerHTML = "Please enter Order ID";
+    return;
+  }
+
+  fetch(`${API_URL}?orderId=${orderId}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "Not Found") {
+        resultBox.innerHTML = "Order not found ❌";
+      } else {
+        resultBox.innerHTML = `
+          <p><b>Status:</b> ${data.status}</p>
+          <p><b>Name:</b> ${data.name}</p>
+          <p><b>Product:</b> ${data.product}</p>
+        `;
+      }
+    })
+    .catch(() => {
+      resultBox.innerHTML = "Error fetching data";
+    });
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Herbaya Skin Co.</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+  <h1>Herbaya Skin Co.</h1>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <img src="https://i.ibb.co/LdDgVX5s/1fdf26ac-7047-4f76-909f-abb2285f24be.png">
+  <h2>Glow Naturally 🌿</h2>
+</section>
+
+<!-- PRODUCT -->
+<section class="product">
+  <img src="https://i.ibb.co/X6RCDdG/Herbaya-Skin-Co-skincare-jar.png">
+  <h2>Herbaya Night Cream</h2>
+  <p>₹499</p>
+  <a href="https://wa.me/917507896782" class="btn">Order on WhatsApp</a>
+</section>
+
+<!-- ORDER TRACKING -->
+<section class="tracking">
+  <h2>Track Your Order</h2>
+  <input type="text" id="orderId" placeholder="Enter Order ID">
+  <button onclick="trackOrder()">Track</button>
+  <div id="result"></div>
+</section>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/917507896782" class="whatsapp">Help</a>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f5fff7;
+  text-align: center;
+}
+
+header {
+  background: #0c5c3d;
+  color: white;
+  padding: 15px;
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+}
+
+.product img {
+  width: 200px;
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #0c5c3d;
+  color: white;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.tracking {
+  margin: 30px;
+}
+
+input {
+  padding: 10px;
+  width: 200px;
+}
+
+button {
+  padding: 10px;
+  background: green;
+  color: white;
+  border: none;
+}
+
+.whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: white;
+  padding: 15px;
+  border-radius: 50%;
+  text-decoration: none;
+}
