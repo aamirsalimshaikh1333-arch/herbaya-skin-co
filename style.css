@@ -1,37 +1,109 @@
-.order-form {
-  width: min(90%, 420px);
-  margin: 24px auto;
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f6f9f7;
+}
+
+/* HEADER */
+header {
+  background: #0c5c3d;
+  color: white;
+  padding: 18px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* HERO */
+.hero img {
+  width: 100%;
+  height: auto;
+}
+
+/* PRODUCT CARD */
+.product {
+  max-width: 400px;
+  margin: -60px auto 20px;
+  background: white;
   padding: 20px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.product img {
+  width: 180px;
+  margin-top: -80px;
+}
+
+.product h2 {
+  margin: 10px 0;
+}
+
+.product p {
+  color: #555;
+}
+
+/* FORM */
+.order-form {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.order-form h3 {
-  margin: 0 0 8px;
-  color: #0c5c3d;
-}
-
 .order-form input,
 .order-form textarea {
-  width: 100%;
   padding: 12px;
-  border: 1px solid #d8e6dc;
+  border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 14px;
-  box-sizing: border-box;
 }
 
 .order-form textarea {
-  min-height: 100px;
-  resize: vertical;
+  min-height: 80px;
 }
 
-.order-form .btn {
+/* BUTTON */
+.btn {
+  padding: 12px;
+  background: #0c5c3d;
+  color: white;
   border: none;
   border-radius: 10px;
+  font-size: 16px;
   cursor: pointer;
+}
+
+/* WHATSAPP FLOAT */
+.whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: white;
+  padding: 14px 16px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* TRACKING */
+.tracking {
+  max-width: 400px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.tracking input {
+  width: 70%;
+  padding: 10px;
+}
+
+.tracking button {
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
 }
