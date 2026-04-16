@@ -1,40 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Herbaya Skin Co.</title>
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<header>
-  <h1>Herbaya Skin Co.</h1>
-</header>
-
-<section class="hero">
-  <img src="https://i.ibb.co/LdDgVX5s/1fdf26ac-7047-4f76-909f-abb2285f24be.png">
-  <h2>Glow Naturally 🌿</h2>
-</section>
-
 <section class="product">
-  <img src="https://i.ibb.co/X6RCDdG/Herbaya-Skin-Co-skincare-jar.png">
+  <img src="https://i.ibb.co/X6RCDdG/Herbaya-Skin-Co-skincare-jar.png" alt="Herbaya Night Cream">
   <h2>Herbaya Night Cream</h2>
   <p>₹499</p>
-  <a href="https://wa.me/917507896782" class="btn">Order on WhatsApp</a>
+  <p>Night cream for men and women.</p>
+
+  <div class="order-form">
+    <h3>Place Your Order</h3>
+    <input type="text" id="customerName" placeholder="Enter your name">
+    <input type="tel" id="customerPhone" placeholder="Enter phone number">
+    <textarea id="customerAddress" placeholder="Enter full address"></textarea>
+    <input type="text" id="productName" value="Herbaya Night Cream" readonly>
+    <button class="btn" onclick="sendToWhatsApp()">Order on WhatsApp</button>
+  </div>
 </section>
-
-<section class="tracking">
-  <h2>Track Your Order</h2>
-  <input type="text" id="orderId" placeholder="Enter Order ID">
-  <button onclick="trackOrder()">Track</button>
-  <div id="result"></div>
-</section>
-
-<a href="https://wa.me/917507896782" class="whatsapp">Help</a>
-
-<script src="script.js"></script>
-
-</body>
-</html>
