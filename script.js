@@ -1,19 +1,8 @@
-function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-  
-  var data = JSON.parse(e.postData.contents);
+const API_URL = "https://script.google.com/macros/s/AKfycbw6vv5e365uVxkvXlKgb5dOkzhwrf0It51FwOCwbbwrUriaGAGOLGuzhAGrkkaIs-KK/exec";
 
-  sheet.appendRow([
-    data.orderId,
-    data.name,
-    data.phone,
-    data.address,
-    data.product,
-    data.quantity,
-    data.total,
-    "Pending"
-  ]);
-
-  return ContentService.createTextOutput("Success")
-    .setMimeType(ContentService.MimeType.TEXT);
+function sendOrderToSheet(data) {
+  return fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
 }
