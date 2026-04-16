@@ -1,37 +1,51 @@
-.order-form {
-  width: min(90%, 420px);
-  margin: 24px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+const API_URL = "https://script.google.com/macros/s/AKfycbzf-myM3hrcn55MGGJBA1hvtkGma_puUWxyKCe2Es1qfsro5YrYJi1rvTWeI1-XsEAcnw/exec";
+
+function trackOrder() {
+  const orderId = document.getElementById("orderId").value.trim();
+  const resultBox = document.getElementById("result");
+
+  if (!orderId) {
+    resultBox.innerHTML = "Please enter Order ID";
+    return;
+  }
+
+  resultBox.innerHTML = "Checking...";
+
+  fetch(`${API_URL}?orderId=${encodeURIComponent(orderId)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "Not Found") {
+        resultBox.innerHTML = "Order not found ❌";
+      } else {
+        resultBox.innerHTML = `
+          <p><b>Status:</b> ${data.status}</p>
+          <p><b>Name:</b> ${data.name}</p>
+          <p><b>Product:</b> ${data.product}</p>
+        `;
+      }
+    })
+    .catch(() => {
+      resultBox.innerHTML = "Error fetching data";
+    });
 }
 
-.order-form h3 {
-  margin: 0 0 8px;
-  color: #0c5c3d;
-}
+function sendToWhatsApp() {
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+  const product = document.getElementById("productName").value.trim();
 
-.order-form input,
-.order-form textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d8e6dc;
-  border-radius: 10px;
-  font-size: 14px;
-  box-sizing: border-box;
-}
+  if (!name || !phone || !address || !product) {
+    alert("Please fill all details first.");
+    return;
+  }
 
-.order-form textarea {
-  min-height: 100px;
-  resize: vertical;
-}
+  const message = `New Order Request:%0A
+Name: ${encodeURIComponent(name)}%0A
+Phone: ${encodeURIComponent(phone)}%0A
+Address: ${encodeURIComponent(address)}%0A
+Product: ${encodeURIComponent(product)}`;
 
-.order-form .btn {
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+  const whatsappURL = `https://wa.me/917507896782?text=${message}`;
+  window.open(whatsappURL, "_blank");
 }
