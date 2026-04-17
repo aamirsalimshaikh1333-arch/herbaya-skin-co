@@ -1,1639 +1,1095 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Herbaya Skin Co.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
-<style>
-/* ===== CONFIG & RESET ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --brand: #2C1810;
-  --accent: #8B5E3C;
-  --accent-light: #C4956A;
-  --cream: #FAF6F0;
-  --parchment: #F2EAE0;
-  --sand: #E8DDD0;
-  --sage: #7A8C6E;
-  --text: #1A120B;
-  --text-muted: #6B5344;
-  --white: #FFFFFF;
-  --border: #DDD3C7;
-  --success: #5A7A5A;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'Jost', sans-serif;
-  --radius: 2px;
-  --shadow: 0 4px 24px rgba(44,24,16,0.10);
-  --shadow-lg: 0 12px 48px rgba(44,24,16,0.16);
-  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
-}
-
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background: var(--cream);
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 100vh;
-}
-
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; display: block; }
-button { cursor: pointer; font-family: var(--sans); border: none; background: none; }
-input, textarea, select { font-family: var(--sans); }
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--parchment); }
-::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 3px; }
-
-/* ===== NAVBAR ===== */
-#navbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(250,246,240,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 5%;
-  height: 68px;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: box-shadow var(--transition);
-}
-#navbar.scrolled { box-shadow: var(--shadow); }
-
-.nav-brand {
-  display: flex; flex-direction: column; align-items: flex-start;
-  cursor: pointer;
-}
-.nav-brand-name {
-  font-family: var(--serif);
-  font-size: 1.45rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--brand);
-  line-height: 1;
-}
-.nav-brand-tagline {
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  line-height: 1;
-  margin-top: 3px;
-}
-
-.nav-links { display: flex; gap: 2rem; align-items: center; }
-.nav-link {
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  cursor: pointer;
-  position: relative;
-  transition: color var(--transition);
-  padding-bottom: 2px;
-}
-.nav-link::after {
-  content: '';
-  position: absolute; bottom: -1px; left: 0; right: 0;
-  height: 1px; background: var(--accent);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform var(--transition);
-}
-.nav-link:hover { color: var(--brand); }
-.nav-link:hover::after { transform: scaleX(1); }
-
-.nav-cart {
-  position: relative;
-  display: flex; align-items: center; gap: 0.4rem;
-  cursor: pointer;
-  padding: 8px 14px;
-  border: 1px solid var(--border);
-  border-radius: 40px;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--brand);
-  transition: all var(--transition);
-}
-.nav-cart:hover { background: var(--brand); color: var(--white); border-color: var(--brand); }
-.cart-count {
-  background: var(--accent);
-  color: var(--white);
-  border-radius: 50%;
-  width: 18px; height: 18px;
-  font-size: 0.65rem;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 500;
-  transition: background var(--transition);
-}
-.nav-cart:hover .cart-count { background: var(--accent-light); }
-
-/* Mobile menu */
-.hamburger {
-  display: none;
-  flex-direction: column; gap: 5px;
-  cursor: pointer; padding: 4px;
-}
-.hamburger span {
-  display: block; width: 24px; height: 1.5px;
-  background: var(--brand);
-  transition: all var(--transition);
-}
-
-/* ===== PAGE WRAPPER ===== */
-#app { padding-top: 68px; min-height: 100vh; }
-.page { display: none; animation: fadeIn 0.4s ease; }
-.page.active { display: block; }
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-/* ===== HERO ===== */
-.hero {
-  position: relative;
-  height: calc(92vh - 68px);
-  min-height: 520px;
-  overflow: hidden;
-  display: flex; align-items: center;
-}
-.hero-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  filter: brightness(0.72);
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(120deg, rgba(44,24,16,0.65) 0%, rgba(44,24,16,0.15) 60%, transparent 100%);
-}
-.hero-content {
-  position: relative; z-index: 2;
-  padding: 0 8%;
-  max-width: 640px;
-}
-.hero-eyebrow {
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--accent-light);
-  margin-bottom: 1.2rem;
-  display: flex; align-items: center; gap: 0.8rem;
-}
-.hero-eyebrow::before {
-  content: '';
-  width: 32px; height: 1px;
-  background: var(--accent-light);
-}
-.hero-title {
-  font-family: var(--serif);
-  font-size: clamp(2.8rem, 6vw, 4.8rem);
-  font-weight: 300;
-  color: var(--white);
-  line-height: 1.08;
-  margin-bottom: 1.4rem;
-  letter-spacing: -0.01em;
-}
-.hero-title em { font-style: italic; color: var(--accent-light); }
-.hero-desc {
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.78);
-  line-height: 1.75;
-  margin-bottom: 2.4rem;
-  max-width: 420px;
-  font-weight: 300;
-}
-.hero-cta {
-  display: inline-flex; gap: 1rem; flex-wrap: wrap;
-}
-.btn-primary {
-  padding: 14px 32px;
-  background: var(--accent);
-  color: var(--white);
-  border-radius: var(--radius);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all var(--transition);
-  border: 1px solid transparent;
-  cursor: pointer;
-}
-.btn-primary:hover { background: var(--brand); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(44,24,16,0.3); }
-
-.btn-outline {
-  padding: 14px 32px;
-  background: transparent;
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.45);
-  border-radius: var(--radius);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 400;
-  transition: all var(--transition);
-  cursor: pointer;
-}
-.btn-outline:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.7); }
-
-/* ===== SECTION HEADERS ===== */
-.section { padding: 80px 5%; }
-.section-header { text-align: center; margin-bottom: 56px; }
-.section-eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.8rem;
-}
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 400;
-  color: var(--brand);
-  line-height: 1.18;
-}
-.section-subtitle {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-top: 0.6rem;
-  font-weight: 300;
-}
-.divider {
-  width: 48px; height: 1px;
-  background: var(--accent-light);
-  margin: 1rem auto;
-}
-
-/* ===== FILTER BAR ===== */
-.filter-bar {
-  display: flex; align-items: center; gap: 0.6rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 48px;
-}
-.filter-btn {
-  padding: 8px 20px;
-  border: 1px solid var(--border);
-  border-radius: 40px;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background: transparent;
-  transition: all var(--transition);
-  cursor: pointer;
-}
-.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-.filter-btn.active {
-  background: var(--brand);
-  border-color: var(--brand);
-  color: var(--white);
-}
-
-/* ===== PRODUCT GRID ===== */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 32px;
-}
-
-/* ===== PRODUCT CARD ===== */
-.product-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all var(--transition);
-  display: flex; flex-direction: column;
-  position: relative;
-}
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent-light);
-}
-.product-card-img-wrap {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: var(--parchment);
-}
-.product-card-img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
-}
-.product-card:hover .product-card-img { transform: scale(1.04); }
-.product-card-badge {
-  position: absolute; top: 12px; left: 12px;
-  background: var(--sage);
-  color: var(--white);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 40px;
-}
-.out-of-stock-overlay {
-  position: absolute; inset: 0;
-  background: rgba(250,246,240,0.72);
-  display: flex; align-items: center; justify-content: center;
-}
-.out-of-stock-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  padding: 6px 16px;
-  background: var(--white);
-  border-radius: 40px;
-}
-
-.product-card-body {
-  padding: 20px;
-  flex: 1;
-  display: flex; flex-direction: column;
-}
-.product-card-cat {
-  font-size: 0.65rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
-.product-card-name {
-  font-family: var(--serif);
-  font-size: 1.18rem;
-  font-weight: 400;
-  color: var(--brand);
-  line-height: 1.25;
-  margin-bottom: 8px;
-}
-.product-card-desc {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-  flex: 1;
-  font-weight: 300;
-  margin-bottom: 16px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.product-card-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 10px;
-  margin-top: auto;
-}
-.product-price {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  font-weight: 500;
-  color: var(--brand);
-}
-.product-currency { font-size: 0.9rem; }
-
-.btn-add-cart {
-  padding: 9px 18px;
-  background: var(--cream);
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  border-radius: var(--radius);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-.btn-add-cart:hover:not(.in-cart) {
-  background: var(--accent);
-  color: var(--white);
-}
-.btn-add-cart.in-cart {
-  background: var(--success);
-  border-color: var(--success);
-  color: var(--white);
-  cursor: default;
-}
-.btn-add-cart:disabled { opacity: 0.45; cursor: not-allowed; }
-
-/* ===== VALUES STRIP ===== */
-.values-strip {
-  background: var(--brand);
-  padding: 48px 5%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 32px;
-}
-.value-item { text-align: center; }
-.value-icon { font-size: 1.6rem; margin-bottom: 10px; }
-.value-title {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--accent-light);
-  margin-bottom: 4px;
-  font-weight: 400;
-}
-.value-desc { font-size: 0.78rem; color: rgba(255,255,255,0.55); font-weight: 300; line-height: 1.5; }
-
-/* ===== PRODUCT PAGE ===== */
-.product-page-inner {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 60px 5%;
-}
-.product-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  margin-bottom: 80px;
-}
-
-.gallery-main {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background: var(--parchment);
-  border-radius: 4px;
-  cursor: zoom-in;
-}
-.gallery-main img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.gallery-main:hover img { transform: scale(1.03); }
-
-.gallery-thumbs {
-  display: flex; gap: 10px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-.gallery-thumb {
-  width: 64px; height: 64px;
-  object-fit: cover;
-  border-radius: 3px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: border-color var(--transition);
-  opacity: 0.7;
-}
-.gallery-thumb.active { border-color: var(--accent); opacity: 1; }
-.gallery-thumb:hover { opacity: 1; }
-
-.product-info { display: flex; flex-direction: column; gap: 0; }
-.product-breadcrumb {
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-  display: flex; gap: 0.5rem; align-items: center;
-  text-transform: uppercase;
-}
-.product-breadcrumb span { cursor: pointer; }
-.product-breadcrumb span:hover { color: var(--accent); }
-
-.product-info-cat {
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 10px;
-}
-.product-info-name {
-  font-family: var(--serif);
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
-  font-weight: 400;
-  color: var(--brand);
-  line-height: 1.1;
-  margin-bottom: 14px;
-}
-.product-info-price {
-  font-family: var(--serif);
-  font-size: 1.9rem;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 20px;
-}
-.product-info-desc {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.8;
-  font-weight: 300;
-  margin-bottom: 28px;
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
-}
-
-.qty-row {
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 20px;
-}
-.qty-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
-.qty-control {
-  display: flex; align-items: center;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.qty-btn {
-  width: 36px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  background: var(--parchment);
-  transition: all var(--transition);
-}
-.qty-btn:hover { background: var(--sand); color: var(--brand); }
-.qty-num {
-  width: 44px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-left: 1px solid var(--border);
-  border-right: 1px solid var(--border);
-  background: var(--white);
-}
-
-.btn-add-to-cart-lg {
-  width: 100%;
-  padding: 16px;
-  background: var(--brand);
-  color: var(--white);
-  border-radius: var(--radius);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all var(--transition);
-  margin-bottom: 12px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
-.btn-add-to-cart-lg:hover:not(.in-cart) { background: var(--accent); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(44,24,16,0.25); }
-.btn-add-to-cart-lg.in-cart { background: var(--success); cursor: default; }
-.btn-add-to-cart-lg:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
-
-.product-stock-note { font-size: 0.75rem; color: var(--sage); display: flex; align-items: center; gap: 6px; }
-.product-stock-note.low { color: #B45309; }
-.product-stock-note.out { color: #DC2626; }
-
-/* Related Products */
-.related-section { border-top: 1px solid var(--border); padding-top: 60px; }
-.related-title {
-  font-family: var(--serif);
-  font-size: 1.9rem;
-  color: var(--brand);
-  margin-bottom: 32px;
-  text-align: center;
-}
-
-/* ===== CART PAGE ===== */
-.cart-page-inner {
-  max-width: 1000px; margin: 0 auto;
-  padding: 60px 5%;
-}
-.page-title {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem);
-  color: var(--brand);
-  font-weight: 400;
-  margin-bottom: 8px;
-}
-.page-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 300; }
-
-.cart-layout {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 40px;
-  align-items: start;
-}
-
-.cart-items { display: flex; flex-direction: column; gap: 20px; }
-.cart-item {
-  display: grid;
-  grid-template-columns: 88px 1fr auto;
-  gap: 20px;
-  align-items: center;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 16px;
-  transition: box-shadow var(--transition);
-}
-.cart-item:hover { box-shadow: var(--shadow); }
-
-.cart-item-img {
-  width: 88px; height: 88px;
-  object-fit: cover;
-  border-radius: 3px;
-  background: var(--parchment);
-  cursor: pointer;
-}
-.cart-item-info {}
-.cart-item-name {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  color: var(--brand);
-  margin-bottom: 4px;
-  cursor: pointer;
-}
-.cart-item-name:hover { color: var(--accent); }
-.cart-item-cat { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-.cart-item-price { font-size: 0.88rem; color: var(--text-muted); }
-
-.cart-item-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-.cart-item-subtotal { font-family: var(--serif); font-size: 1.1rem; color: var(--brand); font-weight: 500; }
-.cart-item-remove {
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border-bottom: 1px solid transparent;
-  transition: all var(--transition);
-  cursor: pointer;
-}
-.cart-item-remove:hover { color: #DC2626; border-color: #DC2626; }
-
-.cart-summary {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 28px;
-  position: sticky;
-  top: 88px;
-}
-.cart-summary-title {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  color: var(--brand);
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.summary-row {
-  display: flex; justify-content: space-between;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-}
-.summary-total {
-  display: flex; justify-content: space-between;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  margin-top: 4px;
-}
-.summary-total-label { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); font-weight: 500; }
-.summary-total-val { font-family: var(--serif); font-size: 1.5rem; color: var(--brand); font-weight: 500; }
-
-.btn-checkout {
-  width: 100%;
-  margin-top: 20px;
-  padding: 15px;
-  background: var(--brand);
-  color: var(--white);
-  border-radius: var(--radius);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all var(--transition);
-  cursor: pointer;
-}
-.btn-checkout:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(44,24,16,0.25); }
-
-.cart-empty {
-  text-align: center;
-  padding: 80px 20px;
-}
-.cart-empty-icon { font-size: 3.5rem; margin-bottom: 16px; opacity: 0.3; }
-.cart-empty-title { font-family: var(--serif); font-size: 1.6rem; color: var(--brand); margin-bottom: 8px; }
-.cart-empty-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; font-weight: 300; }
-
-/* ===== CHECKOUT PAGE ===== */
-.checkout-inner {
-  max-width: 960px; margin: 0 auto;
-  padding: 60px 5%;
-}
-.checkout-layout {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 40px;
-  align-items: start;
-}
-
-.form-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 36px;
-}
-.form-card-title {
-  font-family: var(--serif);
-  font-size: 1.3rem;
-  color: var(--brand);
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-group.full { grid-column: 1 / -1; }
-
-.form-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-.form-input {
-  padding: 11px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  color: var(--text);
-  background: var(--cream);
-  transition: border-color var(--transition), box-shadow var(--transition);
-  outline: none;
-}
-.form-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(139,94,60,0.12);
-  background: var(--white);
-}
-.form-input::placeholder { color: var(--border); }
-textarea.form-input { resize: vertical; min-height: 90px; }
-
-.btn-submit {
-  width: 100%;
-  margin-top: 24px;
-  padding: 16px;
-  background: var(--brand);
-  color: var(--white);
-  border-radius: var(--radius);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 500;
-  transition: all var(--transition);
-  cursor: pointer;
-}
-.btn-submit:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(44,24,16,0.25); }
-.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-
-.order-summary-card {
-  background: var(--parchment);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 28px;
-  position: sticky;
-  top: 88px;
-}
-.order-summary-title {
-  font-family: var(--serif);
-  font-size: 1.2rem;
-  color: var(--brand);
-  margin-bottom: 20px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-}
-.order-item {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 8px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-.order-item:last-of-type { border-bottom: none; }
-.order-item-info { flex: 1; }
-.order-item-name { font-size: 0.85rem; color: var(--brand); font-family: var(--serif); }
-.order-item-qty { font-size: 0.72rem; color: var(--text-muted); }
-.order-item-price { font-size: 0.9rem; color: var(--brand); font-weight: 500; font-family: var(--serif); }
-
-/* Success message */
-.success-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 200;
-  background: rgba(44,24,16,0.72);
-  align-items: center; justify-content: center;
-  animation: fadeIn 0.3s ease;
-}
-.success-overlay.show { display: flex; }
-.success-box {
-  background: var(--white);
-  border-radius: 8px;
-  padding: 52px 48px;
-  text-align: center;
-  max-width: 440px;
-  margin: 20px;
-  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
-}
-@keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.success-icon { font-size: 3rem; margin-bottom: 16px; }
-.success-title { font-family: var(--serif); font-size: 1.9rem; color: var(--brand); margin-bottom: 8px; }
-.success-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
-.success-countdown { margin-top: 16px; font-size: 0.78rem; color: var(--accent); letter-spacing: 0.1em; }
-
-/* ===== FOOTER ===== */
-footer {
-  background: var(--brand);
-  color: rgba(255,255,255,0.65);
-  padding: 60px 5% 32px;
-  margin-top: 80px;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 48px;
-}
-.footer-brand-name {
-  font-family: var(--serif);
-  font-size: 1.5rem;
-  color: var(--white);
-  font-weight: 400;
-  margin-bottom: 12px;
-}
-.footer-brand-desc { font-size: 0.82rem; line-height: 1.7; font-weight: 300; max-width: 260px; }
-.footer-col-title {
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--accent-light);
-  margin-bottom: 16px;
-  font-weight: 500;
-}
-.footer-links { display: flex; flex-direction: column; gap: 10px; }
-.footer-link {
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: color var(--transition);
-  font-weight: 300;
-}
-.footer-link:hover { color: var(--white); }
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.12);
-  padding-top: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.footer-copy { font-size: 0.75rem; font-weight: 300; }
-
-/* Toast */
-.toast {
-  position: fixed;
-  bottom: 28px; right: 28px;
-  background: var(--brand);
-  color: var(--white);
-  padding: 14px 22px;
-  border-radius: 4px;
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  z-index: 300;
-  transform: translateY(20px);
-  opacity: 0;
-  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
-  pointer-events: none;
-  max-width: 280px;
-  box-shadow: var(--shadow-lg);
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .product-layout { grid-template-columns: 1fr; gap: 32px; }
-  .cart-layout { grid-template-columns: 1fr; }
-  .cart-summary { position: static; }
-  .checkout-layout { grid-template-columns: 1fr; }
-  .order-summary-card { position: static; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 640px) {
-  .nav-links { display: none; }
-  .nav-links.open {
-    display: flex; flex-direction: column;
-    position: fixed;
-    top: 68px; left: 0; right: 0;
-    background: var(--cream);
-    padding: 20px 5%;
-    border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    gap: 1.2rem;
-    z-index: 99;
-  }
-  .hamburger { display: flex; }
-  .hero-content { padding: 0 5%; }
-  .section { padding: 56px 5%; }
-  .product-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-  .cart-item { grid-template-columns: 72px 1fr; }
-  .cart-item-actions { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; }
-  .form-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .footer-bottom { flex-direction: column; text-align: center; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Herbaya Skin Co.</title>
+  <style>
+    :root {
+      --bg: #f7f6f1;
+      --card: #ffffff;
+      --text: #223127;
+      --muted: #667564;
+      --primary: #456b4f;
+      --primary-dark: #35523c;
+      --secondary: #8f6a56;
+      --accent: #edf4ea;
+      --accent-soft: #f6efe8;
+      --border: #dce7dc;
+      --shadow: 0 16px 45px rgba(42, 62, 44, 0.08);
+      --success: #25d366;
+      --danger: #cf4d4d;
+      --gold: #d8b36a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(237, 244, 234, 0.9), transparent 28%),
+        linear-gradient(180deg, #fcfdf9 0%, var(--bg) 100%);
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      transition: 0.25s ease;
+    }
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      backdrop-filter: blur(14px);
+      background: rgba(247, 246, 241, 0.88);
+      border-bottom: 1px solid rgba(69, 107, 79, 0.12);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #dfeedd, #f6efe8);
+      box-shadow: inset 0 0 0 1px rgba(69, 107, 79, 0.1);
+      font-size: 1.3rem;
+    }
+    .brand-text {
+      min-width: 0;
+    }
+    .brand-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      line-height: 1;
+    }
+    .brand-subtitle {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 4px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .hero {
+      padding: 44px 0 28px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--primary-dark);
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .hero-copy h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .hero-copy p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 1.02rem;
+      max-width: 590px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .btn {
+      padding: 13px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .hero-points {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .hero-point {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+    .hero-media {
+      position: relative;
+      background: linear-gradient(180deg, #eef5eb, #faf7f2);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      min-height: 100%;
+    }
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+      object-fit: cover;
+    }
+    .hero-badge {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(69, 107, 79, 0.1);
+      box-shadow: var(--shadow);
+    }
+    .hero-badge strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .hero-badge span {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+    .section {
+      padding: 28px 0 14px;
+    }
+    .section-header {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      flex-wrap: wrap;
+    }
+    .section-header h2 {
+      margin: 0;
+      font-size: 1.85rem;
+    }
+    .section-header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 680px;
+    }
+    .products-grid,
+    .benefits-grid,
+    .ingredients-grid,
+    .reviews-grid,
+    .faq-grid {
+      display: grid;
+      gap: 18px;
+    }
+    .products-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .benefits-grid,
+    .ingredients-grid,
+    .reviews-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .product-card,
+    .benefit-card,
+    .ingredient-card,
+    .review-card,
+    .faq-card,
+    .about-box,
+    .usage-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .product-card {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-image-wrap {
+      background: linear-gradient(180deg, #f8fbf6, #f7efe9);
+      padding: 18px;
+    }
+    .product-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      border-radius: 20px;
+    }
+    .product-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .product-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+    .product-title {
+      margin: 0;
+      font-size: 1.12rem;
+    }
+    .product-price {
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+      font-size: 1.05rem;
+    }
+    .product-desc {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .product-meta {
+      display: inline-flex;
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+    .product-actions .btn {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 14px;
+    }
+    .info-btn {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .benefit-card,
+    .ingredient-card,
+    .review-card,
+    .faq-card {
+      padding: 22px;
+    }
+    .icon-pill {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+    .benefit-card h3,
+    .ingredient-card h3,
+    .review-card h3,
+    .faq-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+    }
+    .benefit-card p,
+    .ingredient-card p,
+    .review-card p,
+    .faq-card p,
+    .about-box p,
+    .usage-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .about-box,
+    .usage-box {
+      padding: 24px;
+    }
+    .usage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .usage-steps {
+      margin: 14px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .stars {
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    .reviewer {
+      display: block;
+      margin-top: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .footer {
+      margin-top: 40px;
+      padding: 28px 0 92px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .floating-cart,
+    .floating-whatsapp {
+      position: fixed;
+      right: 18px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 1.3rem;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.16);
+      z-index: 95;
+    }
+    .floating-cart {
+      bottom: 88px;
+      background: var(--primary);
+    }
+    .floating-whatsapp {
+      bottom: 18px;
+      background: var(--success);
+      font-size: 1.45rem;
+    }
+    .cart-count {
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 6px;
+      background: #111;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .drawer,
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 120;
+    }
+    .drawer.active,
+    .modal.active { display: block; }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(17, 18, 16, 0.45);
+    }
+    .drawer-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(420px, 100%);
+      height: 100%;
+      background: #fff;
+      box-shadow: -8px 0 30px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer-header,
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-body {
+      padding: 16px 18px;
+      overflow: auto;
+      flex: 1;
+    }
+    .close-btn {
+      background: #f4eeea;
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item img {
+      width: 74px;
+      height: 74px;
+      border-radius: 14px;
+      object-fit: cover;
+      background: #faf5f2;
+      border: 1px solid var(--border);
+      padding: 6px;
+    }
+    .cart-item h4 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+    .cart-item p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .cart-item-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .qty-btn,
+    .remove-btn {
+      border-radius: 10px;
+      padding: 8px 10px;
+      background: #f6efeb;
+      color: var(--text);
+    }
+    .remove-btn {
+      background: #fff1f1;
+      color: var(--danger);
+    }
+    .cart-footer {
+      border-top: 1px solid var(--border);
+      padding: 16px 18px 20px;
+      background: #fff;
+    }
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .checkout-form {
+      display: grid;
+      gap: 10px;
+    }
+    .checkout-form input {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      outline: none;
+      font: inherit;
+      background: #fffdfc;
+    }
+    .checkout-form input:focus {
+      border-color: #9db09e;
+      box-shadow: 0 0 0 3px rgba(157, 176, 158, 0.16);
+    }
+    .helper-text {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+    .empty-cart {
+      color: var(--muted);
+      line-height: 1.7;
+      text-align: center;
+      padding: 24px 8px;
+    }
+    .modal-panel {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(700px, calc(100% - 24px));
+      max-height: 88vh;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-body {
+      padding: 18px;
+      overflow: auto;
+    }
+    .info-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .info-layout img {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: #faf5f2;
+      padding: 10px;
+    }
+    .steps {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    @media (max-width: 980px) {
+      .hero-grid,
+      .products-grid,
+      .benefits-grid,
+      .ingredients-grid,
+      .reviews-grid,
+      .faq-grid,
+      .usage-grid,
+      .info-layout {
+        grid-template-columns: 1fr;
+      }
+      .hero-copy { order: 2; }
+      .hero-media { order: 1; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 540px) {
+      .container { width: min(100% - 20px, 1160px); }
+      .hero { padding-top: 24px; }
+      .brand-title { font-size: 1.08rem; }
+      .brand-subtitle { font-size: 0.72rem; }
+      .hero-copy p { font-size: 0.96rem; }
+      .product-actions { flex-direction: column; }
+      .drawer-panel { width: 100%; }
+      .hero-badge {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<!-- ===== CONFIG ===== -->
-<script>
-const CONFIG = {
-  storeName: "Herbaya Skin Co.",
-  tagline: "Nature's Ritual, Refined",
-  formspreeUrl: "https://formspree.io/f/xpwrqjnd", // Replace with your Formspree URL
-  currency: "₹",
-  phone: "7507896782",
-  email: "aamirsalimshaikh1319@gmail.com"
-};
-
-// ===== PRODUCTS =====
-const PRODUCTS = [
-  {
-    id: 1,
-    name: "Herbaya Night Cream",
-    price: 499,
-    category: "Night Care",
-    description: "A nourishing night cream designed to support soft, healthy-looking skin. Helps improve skin texture and glow with regular use. Suitable for both men and women.",
-    images: ["https://i.ibb.co/X6RCDdG/Herbaya-Skin-Co-skincare-jar.png"],
-    stock: 20
-  }
-];
-<!-- ===== NAVBAR ===== -->
-<nav id="navbar">
-  <div class="nav-brand" onclick="navigate('#home')">
-    <span class="nav-brand-name" id="nav-store-name"></span>
-    <span class="nav-brand-tagline" id="nav-tagline"></span>
-  </div>
-  <div class="nav-links" id="nav-links">
-    <span class="nav-link" onclick="navigate('#home'); closeMenu()">Shop</span>
-    <span class="nav-link" onclick="scrollToAbout(); closeMenu()">About</span>
-    <span class="nav-link" onclick="navigate('#home'); closeMenu()">Collections</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:14px;">
-    <div class="nav-cart" onclick="navigate('#cart')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <span id="cart-count" class="cart-count">0</span>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#top" class="brand" aria-label="Herbaya Skin Co.">
+        <div class="brand-mark">🌿</div>
+        <div class="brand-text">
+          <div class="brand-title">Herbaya Skin Co.</div>
+          <span class="brand-subtitle">Skin care & hair care essentials for a refined daily routine</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#how-to-use">How to Use</a>
+        <a href="#faq">FAQ</a>
+      </div>
     </div>
-    <div class="hamburger" onclick="toggleMenu()" id="hamburger">
-      <span></span><span></span><span></span>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">🌿 Gentle care for skin & hair</div>
+        <h1>Nourish your routine. Wake up looking fresh and cared for.</h1>
+        <p>
+          Herbaya Skin Co. brings together skin care and hair care essentials in one clean, premium experience. Designed for everyday comfort, elegant presentation, and easy mobile shopping.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#products">Shop Now</a>
+          <a class="btn btn-secondary" href="#ingredients">Explore Ingredients</a>
+        </div>
+        <div class="hero-points">
+          <div class="hero-point">For Men & Women</div>
+          <div class="hero-point">Daily Care Routine</div>
+          <div class="hero-point">Simple WhatsApp Ordering</div>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="https://i.ibb.co/LdDgVX5s/1fdf26ac-7047-4f76-909f-abb2285f24be.png" alt="Herbaya Skin Co. hero banner" />
+        <div class="hero-badge">
+          <strong>Premium everyday care</strong>
+          <span>Clean design, trusted ingredients, and an easy order flow.</span>
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
+  </header>
 
-<!-- ===== PAGES ===== -->
-<div id="app">
+  <main>
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Featured Products</h2>
+            <p>Explore Herbaya essentials created for a simple skin care and hair care routine. Tap “More Info” to see directions and details.</p>
+          </div>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+      </div>
+    </section>
 
-  <!-- HOME PAGE -->
-  <div id="page-home" class="page">
-    <section class="hero">
-      <img class="hero-img" src="https://i.ibb.co/LdDgVX5s/1fdf26ac-7047-4f76-909f-abb2285f24be.png" alt="Herbaya Skin Co. hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <p class="hero-eyebrow">Rooted in Tradition</p>
-        <h1 class="hero-title">Skin rituals<br>crafted by <em>nature</em></h1>
-        <p class="hero-desc">Small-batch botanical skincare inspired by Ayurveda and formulated for modern skin. Every ingredient has a purpose.</p>
-        <div class="hero-cta">
-          <button class="btn-primary" onclick="document.getElementById('shop-section').scrollIntoView({behavior:'smooth'})">Explore Products</button>
-          <button class="btn-outline" onclick="scrollToAbout()">Our Philosophy</button>
+    <section class="section" id="benefits">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Why customers choose Herbaya</h2>
+            <p>Every part of the experience is built to feel clean, comfortable, and easy to trust.</p>
+          </div>
+        </div>
+        <div class="benefits-grid">
+          <article class="benefit-card">
+            <div class="icon-pill">✨</div>
+            <h3>Comfort-first routine</h3>
+            <p>Products designed for daily use with a smooth, easy routine that fits naturally into day and night care.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="icon-pill">🌿</div>
+            <h3>Ingredient-focused care</h3>
+            <p>Key ingredients are presented clearly so customers can understand what goes into the formula and why it matters.</p>
+          </article>
+          <article class="benefit-card">
+            <div class="icon-pill">📦</div>
+            <h3>Mobile-friendly shopping</h3>
+            <p>From browsing to cart to WhatsApp order submission, the full flow is simple and fast on mobile devices.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="shop-section">
-      <div class="section-header">
-        <p class="section-eyebrow">The Collection</p>
-        <h2 class="section-title">Botanical Formulas</h2>
-        <div class="divider"></div>
-        <p class="section-subtitle">Each product is thoughtfully formulated with time-tested herbs and modern actives.</p>
+    <section class="section" id="ingredients">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Highlighted ingredients</h2>
+            <p>Showcasing a few key ingredients helps build trust and gives customers a better understanding of the product.</p>
+          </div>
+        </div>
+        <div class="ingredients-grid">
+          <article class="ingredient-card">
+            <div class="icon-pill">🧪</div>
+            <h3>Niacinamide</h3>
+            <p>Often included in skin care routines for supporting a smoother-looking and more balanced skin appearance.</p>
+          </article>
+          <article class="ingredient-card">
+            <div class="icon-pill">🌼</div>
+            <h3>Kojic Acid Dipalmitate</h3>
+            <p>Commonly used in cosmetic formulations designed for a brighter and more refined overall look.</p>
+          </article>
+          <article class="ingredient-card">
+            <div class="icon-pill">🍃</div>
+            <h3>Botanical extracts</h3>
+            <p>A blend of selected extracts contributes to the product’s premium identity and everyday care feel.</p>
+          </article>
+        </div>
       </div>
-      <div class="filter-bar" id="filter-bar"></div>
-      <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <div class="values-strip" id="about-section">
-      <div class="value-item">
-        <div class="value-icon">🌿</div>
-        <div class="value-title">Botanical Actives</div>
-        <div class="value-desc">Every formula is built around time-tested herbs sourced responsibly from India.</div>
-      </div>
-      <div class="value-item">
-        <div class="value-icon">🧪</div>
-        <div class="value-title">Clean Formulas</div>
-        <div class="value-desc">Free from parabens, sulphates, and synthetic fragrances. Always.</div>
-      </div>
-      <div class="value-item">
-        <div class="value-icon">♻️</div>
-        <div class="value-title">Conscious Packaging</div>
-        <div class="value-desc">Recyclable glass and paper packaging — beauty without the guilt.</div>
-      </div>
-      <div class="value-item">
-        <div class="value-icon">🐰</div>
-        <div class="value-title">Cruelty-Free</div>
-        <div class="value-desc">No animal testing, ever. Certified and committed.</div>
-      </div>
-    </div>
-
-    <footer>
-      <div class="footer-grid">
-        <div>
-          <div class="footer-brand-name" id="footer-store-name"></div>
-          <p class="footer-brand-desc">Small-batch botanical skincare rooted in Ayurvedic wisdom and crafted for modern rituals. Nature's finest, thoughtfully formulated.</p>
+    <section class="section" id="about">
+      <div class="container usage-grid">
+        <div class="about-box">
+          <div class="section-header" style="margin-bottom: 14px;">
+            <div>
+              <h2 style="font-size: 1.6rem;">About Herbaya Skin Co.</h2>
+            </div>
+          </div>
+          <p>
+            <strong style="color: var(--text);">Herbaya Skin Co.</strong> is created for customers who want skin care and hair care products in one clean and premium shopping experience. The website is designed to feel modern, elegant, and simple to use, especially on mobile.
+          </p>
         </div>
-        <div>
-          <div class="footer-col-title">Navigate</div>
-          <div class="footer-links">
-            <span class="footer-link" onclick="navigate('#home')">Shop All</span>
-            <span class="footer-link" onclick="navigate('#cart')">Cart</span>
-            <span class="footer-link" onclick="navigate('#checkout')">Checkout</span>
+        <div class="usage-box" id="how-to-use">
+          <div class="section-header" style="margin-bottom: 14px;">
+            <div>
+              <h2 style="font-size: 1.6rem;">How to use</h2>
+            </div>
+          </div>
+          <p>For the Herbaya Night Cream, customers can follow these easy steps as part of their regular routine:</p>
+          <ol class="usage-steps">
+            <li>Clean the face properly before application.</li>
+            <li>Take a sufficient amount of cream on fingertips.</li>
+            <li>Apply evenly across the face.</li>
+            <li>Massage gently in circular motion for about 1 minute.</li>
+            <li>Use regularly as part of your night routine.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>What customers love</h2>
+            <p>Testimonials help make the brand feel more trustworthy and give new buyers extra confidence.</p>
           </div>
         </div>
-        <div>
-          <div class="footer-col-title">Contact</div>
-          <div class="footer-links">
-            <span class="footer-link" id="footer-email"></span>
-            <span class="footer-link" id="footer-phone"></span>
-            <span class="footer-link">Help & Support</span>
+        <div class="reviews-grid">
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>The website is very easy to use and the product presentation feels premium. Ordering through WhatsApp was quick and simple.</p>
+            <span class="reviewer">— A happy customer</span>
+          </article>
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>I liked how clearly everything was shown, from product image to usage steps. It feels clean and professional on mobile too.</p>
+            <span class="reviewer">— Verified buyer</span>
+          </article>
+          <article class="review-card">
+            <div class="stars">★★★★★</div>
+            <p>The design gives a proper skin care brand vibe. It looks much more premium than a basic product page.</p>
+            <span class="reviewer">— Regular shopper</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2>Frequently asked questions</h2>
+            <p>A helpful FAQ section clears doubts before customers ask them on WhatsApp.</p>
           </div>
         </div>
-      </div>
-      <div class="footer-bottom">
-        <span class="footer-copy" id="footer-copy"></span>
-        <span class="footer-copy">Made with care in India 🌿</span>
-      </div>
-    </footer>
-  </div>
-
-  <!-- PRODUCT PAGE -->
-  <div id="page-product" class="page">
-    <div class="product-page-inner">
-      <div id="product-detail-content"></div>
-    </div>
-  </div>
-
-  <!-- CART PAGE -->
-  <div id="page-cart" class="page">
-    <div class="cart-page-inner">
-      <h1 class="page-title">Your Cart</h1>
-      <p class="page-subtitle" id="cart-subtitle"></p>
-      <div id="cart-content"></div>
-    </div>
-  </div>
-
-  <!-- CHECKOUT PAGE -->
-  <div id="page-checkout" class="page">
-    <div class="checkout-inner">
-      <h1 class="page-title">Checkout</h1>
-      <p class="page-subtitle">You're one step away from beautiful skin.</p>
-      <div id="checkout-content"></div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<!-- Success overlay -->
-<div class="success-overlay" id="success-overlay">
-  <div class="success-box">
-    <div class="success-icon">🌿</div>
-    <h2 class="success-title">Order Placed!</h2>
-    <p class="success-desc">Thank you for your order. We've received your details and will be in touch shortly to confirm shipment.</p>
-    <p class="success-countdown" id="success-countdown">Redirecting in 3 seconds…</p>
-  </div>
-</div>
-
-<!-- ===== MAIN JS ===== -->
-<script>
-// ===== INIT =====
-document.getElementById('nav-store-name').textContent = CONFIG.storeName;
-document.getElementById('nav-tagline').textContent = CONFIG.tagline;
-document.getElementById('footer-store-name').textContent = CONFIG.storeName;
-document.getElementById('footer-email').textContent = CONFIG.email;
-document.getElementById('footer-phone').textContent = 'Phone: +91 ' + CONFIG.phone;
-document.getElementById('footer-copy').textContent = '© ' + new Date().getFullYear() + ' ' + CONFIG.storeName + '. All rights reserved.';
-
-// ===== CART =====
-let cart = JSON.parse(localStorage.getItem('neo_cart') || '[]');
-
-function saveCart() {
-  localStorage.setItem('neo_cart', JSON.stringify(cart));
-  updateCartCount();
-}
-
-function updateCartCount() {
-  const total = cart.reduce((s, i) => s + i.qty, 0);
-  document.getElementById('cart-count').textContent = total;
-}
-
-function addToCart(productId, qty = 1) {
-  const product = PRODUCTS.find(p => p.id === productId);
-  if (!product || product.stock === 0) return;
-  const existing = cart.find(i => i.id === productId);
-  if (existing) {
-    existing.qty = Math.min(existing.qty + qty, product.stock);
-  } else {
-    cart.push({ id: productId, qty: Math.min(qty, product.stock) });
-  }
-  saveCart();
-  showToast(`${product.name} added to cart`);
-  refreshCartButtons();
-}
-
-function removeFromCart(productId) {
-  cart = cart.filter(i => i.id !== productId);
-  saveCart();
-  renderCartPage();
-  refreshCartButtons();
-}
-
-function updateCartQty(productId, delta) {
-  const item = cart.find(i => i.id === productId);
-  const product = PRODUCTS.find(p => p.id === productId);
-  if (!item) return;
-  item.qty = Math.max(1, Math.min(item.qty + delta, product.stock));
-  saveCart();
-  renderCartPage();
-}
-
-function isInCart(productId) {
-  return cart.some(i => i.id === productId);
-}
-
-function getCartTotal() {
-  return cart.reduce((s, i) => {
-    const p = PRODUCTS.find(pr => pr.id === i.id);
-    return s + (p ? p.price * i.qty : 0);
-  }, 0);
-}
-
-function refreshCartButtons() {
-  document.querySelectorAll('[data-cart-btn]').forEach(btn => {
-    const id = parseInt(btn.dataset.cartBtn);
-    const product = PRODUCTS.find(p => p.id === id);
-    if (!product) return;
-    if (product.stock === 0) {
-      btn.textContent = 'Out of Stock';
-      btn.disabled = true;
-      btn.classList.remove('in-cart');
-    } else if (isInCart(id)) {
-      btn.textContent = 'In Cart ✓';
-      btn.classList.add('in-cart');
-      btn.disabled = false;
-    } else {
-      btn.textContent = 'Add to Cart';
-      btn.classList.remove('in-cart');
-      btn.disabled = false;
-    }
-  });
-}
-
-// ===== ROUTING =====
-let currentPage = '';
-let currentProductId = null;
-
-function navigate(hash) {
-  window.location.hash = hash;
-}
-
-function handleRoute() {
-  const hash = window.location.hash || '#home';
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-
-  if (hash === '#home') {
-    showPage('home');
-    renderHomePage();
-  } else if (hash.startsWith('#product-')) {
-    const id = parseInt(hash.replace('#product-', ''));
-    currentProductId = id;
-    showPage('product');
-    renderProductPage(id);
-  } else if (hash === '#cart') {
-    showPage('cart');
-    renderCartPage();
-  } else if (hash === '#checkout') {
-    showPage('checkout');
-    renderCheckoutPage();
-  } else {
-    showPage('home');
-    renderHomePage();
-  }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function showPage(name) {
-  document.getElementById('page-' + name).classList.add('active');
-  currentPage = name;
-}
-
-window.addEventListener('hashchange', handleRoute);
-window.addEventListener('load', handleRoute);
-
-// Navbar scroll
-window.addEventListener('scroll', () => {
-  const nb = document.getElementById('navbar');
-  nb.classList.toggle('scrolled', window.scrollY > 20);
-});
-
-// ===== HOME PAGE =====
-let activeFilter = 'All';
-
-function renderHomePage() {
-  renderFilterBar();
-  renderProductGrid();
-  setTimeout(refreshCartButtons, 50);
-}
-
-function renderFilterBar() {
-  const categories = ['All', ...new Set(PRODUCTS.map(p => p.category))];
-  const bar = document.getElementById('filter-bar');
-  bar.innerHTML = categories.map(cat => `
-    <button class="filter-btn ${cat === activeFilter ? 'active' : ''}"
-      onclick="setFilter('${cat}')">${cat}</button>
-  `).join('');
-}
-
-function setFilter(cat) {
-  activeFilter = cat;
-  renderFilterBar();
-  renderProductGrid();
-  setTimeout(refreshCartButtons, 50);
-}
-
-function renderProductGrid() {
-  const filtered = activeFilter === 'All' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
-  const grid = document.getElementById('product-grid');
-  grid.innerHTML = filtered.map(product => productCardHTML(product)).join('');
-}
-
-function productCardHTML(product) {
-  const inCart = isInCart(product.id);
-  const outOfStock = product.stock === 0;
-  const btnText = outOfStock ? 'Out of Stock' : inCart ? 'In Cart ✓' : 'Add to Cart';
-  const btnClass = outOfStock ? 'btn-add-cart' : inCart ? 'btn-add-cart in-cart' : 'btn-add-cart';
-  return `
-    <div class="product-card" onclick="navigate('#product-${product.id}')">
-      <div class="product-card-img-wrap">
-        <img class="product-card-img" src="${product.images[0]}" alt="${product.name}" loading="lazy">
-        <div class="product-card-badge">${product.category}</div>
-        ${outOfStock ? `<div class="out-of-stock-overlay"><span class="out-of-stock-label">Sold Out</span></div>` : ''}
-      </div>
-      <div class="product-card-body">
-        <div class="product-card-cat">${product.category}</div>
-        <div class="product-card-name">${product.name}</div>
-        <div class="product-card-desc">${product.description}</div>
-        <div class="product-card-footer">
-          <div class="product-price"><span class="product-currency">${CONFIG.currency}</span>${product.price.toLocaleString('en-IN')}</div>
-          <button class="${btnClass}" data-cart-btn="${product.id}"
-            ${outOfStock ? 'disabled' : ''}
-            onclick="event.stopPropagation(); if(!this.classList.contains('in-cart') && !this.disabled) addToCart(${product.id})"
-          >${btnText}</button>
+        <div class="faq-grid">
+          <article class="faq-card">
+            <h3>Who can use Herbaya Night Cream?</h3>
+            <p>It is presented as suitable for both men and women as part of a regular night care routine.</p>
+          </article>
+          <article class="faq-card">
+            <h3>How do I place an order?</h3>
+            <p>Add products to cart, fill in your details, and the order message will open directly in WhatsApp.</p>
+          </article>
+          <article class="faq-card">
+            <h3>Can I add more products later?</h3>
+            <p>Yes. You can expand the same website design by adding more product objects in the JavaScript section.</p>
+          </article>
+          <article class="faq-card">
+            <h3>Is this website mobile friendly?</h3>
+            <p>Yes. The layout, buttons, cart, and ordering flow are all optimized for mobile users.</p>
+          </article>
         </div>
       </div>
-    </div>
-  `;
-}
+    </section>
+  </main>
 
-// ===== PRODUCT PAGE =====
-let detailQty = 1;
-
-function renderProductPage(id) {
-  const product = PRODUCTS.find(p => p.id === id);
-  if (!product) { navigate('#home'); return; }
-  detailQty = 1;
-
-  const related = PRODUCTS.filter(p => p.id !== id && p.category === product.category).slice(0, 4);
-  const inCart = isInCart(id);
-  const outOfStock = product.stock === 0;
-  const lowStock = product.stock > 0 && product.stock <= 5;
-
-  const stockNote = outOfStock
-    ? `<span class="product-stock-note out">✕ Out of stock</span>`
-    : lowStock
-      ? `<span class="product-stock-note low">⚠ Only ${product.stock} left</span>`
-      : `<span class="product-stock-note">✓ In stock</span>`;
-
-  const btnText = outOfStock ? 'Out of Stock' : inCart ? 'In Cart ✓' : 'Add to Cart';
-  const btnClass = `btn-add-to-cart-lg${inCart ? ' in-cart' : ''}`;
-
-  const thumbs = product.images.length > 1
-    ? product.images.map((img, i) => `<img class="gallery-thumb ${i === 0 ? 'active' : ''}" src="${img}" alt="${product.name}" onclick="switchImage(this, '${img}')">`).join('')
-    : '';
-
-  const relatedHTML = related.length ? `
-    <div class="related-section">
-      <h3 class="related-title">You May Also Like</h3>
-      <div class="product-grid">${related.map(p => productCardHTML(p)).join('')}</div>
-    </div>` : '';
-
-  document.getElementById('product-detail-content').innerHTML = `
-    <div style="margin-bottom:24px;">
-      <div class="product-breadcrumb">
-        <span onclick="navigate('#home')">Shop</span> › <span>${product.category}</span> › <span>${product.name}</span>
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="brand-mark">🌿</div>
+        <div>
+          <strong>Herbaya Skin Co.</strong><br />
+          Refined skin care & hair care essentials.
+        </div>
       </div>
-    </div>
-    <div class="product-layout">
       <div>
-        <div class="gallery-main">
-          <img id="gallery-main-img" src="${product.images[0]}" alt="${product.name}">
-        </div>
-        ${thumbs ? `<div class="gallery-thumbs">${thumbs}</div>` : ''}
-      </div>
-      <div class="product-info">
-        <div class="product-info-cat">${product.category}</div>
-        <h1 class="product-info-name">${product.name}</h1>
-        <div class="product-info-price">${CONFIG.currency}${product.price.toLocaleString('en-IN')}</div>
-        <p class="product-info-desc">${product.description}</p>
-        <div class="qty-row">
-          <span class="qty-label">Qty</span>
-          <div class="qty-control">
-            <button class="qty-btn" onclick="changeDetailQty(-1)">−</button>
-            <div class="qty-num" id="detail-qty-num">1</div>
-            <button class="qty-btn" onclick="changeDetailQty(1)">+</button>
-          </div>
-          ${stockNote}
-        </div>
-        <button class="${btnClass}" id="detail-add-btn" data-cart-btn="${product.id}"
-          ${outOfStock ? 'disabled' : ''}
-          onclick="if(!this.classList.contains('in-cart') && !this.disabled){ addToCart(${product.id}, detailQty); this.textContent='In Cart ✓'; this.classList.add('in-cart'); }"
-        >
-          ${outOfStock ? '✕ ' : inCart ? '✓ ' : '+ '}${btnText}
-        </button>
+        Email: aamirsalimshaikh1319@gmail.com<br />
+        WhatsApp: +91 7507896782
       </div>
     </div>
-    ${relatedHTML}
-  `;
-  setTimeout(refreshCartButtons, 50);
-}
+  </footer>
 
-function changeDetailQty(delta) {
-  const product = PRODUCTS.find(p => p.id === currentProductId);
-  if (!product) return;
-  detailQty = Math.max(1, Math.min(detailQty + delta, product.stock || 1));
-  document.getElementById('detail-qty-num').textContent = detailQty;
-}
+  <button class="floating-cart" id="cartButton" aria-label="Open cart">
+    🛒
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
 
-function switchImage(el, src) {
-  document.getElementById('gallery-main-img').src = src;
-  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-}
+  <a class="floating-whatsapp" href="https://wa.me/917507896782" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">✆</a>
 
-// ===== CART PAGE =====
-function renderCartPage() {
-  const container = document.getElementById('cart-content');
-  if (cart.length === 0) {
-    document.getElementById('cart-subtitle').textContent = '';
-    container.innerHTML = `
-      <div class="cart-empty">
-        <div class="cart-empty-icon">🛒</div>
-        <div class="cart-empty-title">Your cart is empty</div>
-        <div class="cart-empty-desc">Explore our botanical collection and find your new skincare ritual.</div>
-        <button class="btn-primary" onclick="navigate('#home')">Shop Now</button>
-      </div>`;
-    return;
-  }
-
-  const itemCount = cart.reduce((s, i) => s + i.qty, 0);
-  document.getElementById('cart-subtitle').textContent = `${itemCount} item${itemCount !== 1 ? 's' : ''} in your cart`;
-
-  const total = getCartTotal();
-  const itemsHTML = cart.map(item => {
-    const p = PRODUCTS.find(pr => pr.id === item.id);
-    if (!p) return '';
-    return `
-      <div class="cart-item">
-        <img class="cart-item-img" src="${p.images[0]}" alt="${p.name}" onclick="navigate('#product-${p.id}')">
-        <div class="cart-item-info">
-          <div class="cart-item-cat">${p.category}</div>
-          <div class="cart-item-name" onclick="navigate('#product-${p.id}')">${p.name}</div>
-          <div class="cart-item-price">${CONFIG.currency}${p.price.toLocaleString('en-IN')} each</div>
-          <div class="qty-control" style="margin-top:10px;">
-            <button class="qty-btn" onclick="updateCartQty(${p.id}, -1)">−</button>
-            <div class="qty-num">${item.qty}</div>
-            <button class="qty-btn" onclick="updateCartQty(${p.id}, 1)">+</button>
-          </div>
+  <div class="drawer" id="cartDrawer">
+    <div class="overlay" data-close-cart></div>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div>
+          <strong>Your Cart</strong>
+          <div style="color: var(--muted); font-size: 0.9rem; margin-top: 4px;">Review your selected products before sending the order.</div>
         </div>
-        <div class="cart-item-actions">
-          <div class="cart-item-subtotal">${CONFIG.currency}${(p.price * item.qty).toLocaleString('en-IN')}</div>
-          <span class="cart-item-remove" onclick="removeFromCart(${p.id})">Remove</span>
-        </div>
-      </div>`;
-  }).join('');
-
-  container.innerHTML = `
-    <div class="cart-layout">
-      <div class="cart-items">${itemsHTML}</div>
-      <div class="cart-summary">
-        <div class="cart-summary-title">Order Summary</div>
-        <div class="summary-row"><span>Subtotal</span><span>${CONFIG.currency}${total.toLocaleString('en-IN')}</span></div>
-        <div class="summary-row"><span>Shipping</span><span>Calculated at checkout</span></div>
-        <div class="summary-total">
-          <span class="summary-total-label">Total</span>
-          <span class="summary-total-val">${CONFIG.currency}${total.toLocaleString('en-IN')}</span>
-        </div>
-        <button class="btn-checkout" onclick="navigate('#checkout')">Proceed to Checkout →</button>
-        <div style="text-align:center;margin-top:14px;">
-          <span style="font-size:0.72rem;color:var(--text-muted);letter-spacing:0.06em;cursor:pointer;" onclick="navigate('#home')">← Continue Shopping</span>
-        </div>
+        <button class="close-btn" data-close-cart>&times;</button>
       </div>
-    </div>`;
-}
-
-// ===== CHECKOUT PAGE =====
-function renderCheckoutPage() {
-  if (cart.length === 0) {
-    document.getElementById('checkout-content').innerHTML = `
-      <div class="cart-empty">
-        <div class="cart-empty-icon">🌿</div>
-        <div class="cart-empty-title">Nothing to checkout</div>
-        <div class="cart-empty-desc">Add some products to your cart first.</div>
-        <button class="btn-primary" onclick="navigate('#home')">Shop Now</button>
-      </div>`;
-    return;
-  }
-
-  const total = getCartTotal();
-  const orderItemsHTML = cart.map(item => {
-    const p = PRODUCTS.find(pr => pr.id === item.id);
-    if (!p) return '';
-    return `
-      <div class="order-item">
-        <div class="order-item-info">
-          <div class="order-item-name">${p.name}</div>
-          <div class="order-item-qty">Qty: ${item.qty}</div>
-        </div>
-        <div class="order-item-price">${CONFIG.currency}${(p.price * item.qty).toLocaleString('en-IN')}</div>
-      </div>`;
-  }).join('');
-
-  document.getElementById('checkout-content').innerHTML = `
-    <div class="checkout-layout">
-      <div class="form-card">
-        <div class="form-card-title">Delivery Information</div>
-        <div class="form-grid" id="checkout-form">
-          <div class="form-group">
-            <label class="form-label">Full Name *</label>
-            <input class="form-input" type="text" id="field-name" placeholder="Priya Sharma" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email *</label>
-            <input class="form-input" type="email" id="field-email" placeholder="you@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Phone *</label>
-            <input class="form-input" type="tel" id="field-phone" placeholder="+91 98765 43210" required>
-          </div>
-          <div class="form-group full">
-            <label class="form-label">Delivery Address *</label>
-            <textarea class="form-input" id="field-address" placeholder="Flat / House No., Street, City, State, PIN" required></textarea>
-          </div>
-          <div class="form-group full">
-            <label class="form-label">Order Notes (optional)</label>
-            <input class="form-input" type="text" id="field-notes" placeholder="Any special instructions…">
-          </div>
-          <div class="form-group full">
-            <button class="btn-submit" id="submit-btn" onclick="submitOrder()">Place Order →</button>
-          </div>
-        </div>
+      <div class="drawer-body">
+        <div id="cartItems"></div>
       </div>
-      <div class="order-summary-card">
-        <div class="order-summary-title">Your Order</div>
-        ${orderItemsHTML}
-        <div class="summary-row" style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
-          <span>Subtotal</span><span>${CONFIG.currency}${total.toLocaleString('en-IN')}</span>
+      <div class="cart-footer">
+        <div class="total-row">
+          <span>Total</span>
+          <span id="cartTotal">₹0</span>
         </div>
-        <div class="summary-row"><span>Shipping</span><span>TBD</span></div>
-        <div class="summary-total" style="margin-top:8px;">
-          <span class="summary-total-label">Total</span>
-          <span class="summary-total-val">${CONFIG.currency}${total.toLocaleString('en-IN')}</span>
+        <form class="checkout-form" id="checkoutForm">
+          <input type="text" id="customerName" placeholder="Customer name" required />
+          <input type="tel" id="customerPhone" placeholder="Phone number" required />
+          <input type="text" id="customerAddress" placeholder="Delivery address" required />
+          <button class="btn btn-primary" type="submit">Send Order</button>
+          <div class="helper-text">
+            When you click “Send Order”, the order will open directly in WhatsApp with the customer details and selected items.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="infoModal">
+    <div class="overlay" data-close-info></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <strong id="infoTitle">Product Information</strong>
+          <div id="infoPrice" style="color: var(--muted); margin-top: 4px;"></div>
         </div>
-        <div style="margin-top:20px;padding:14px;background:var(--white);border-radius:3px;border:1px solid var(--border);">
-          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Need Help?</div>
-          <div style="font-size:0.8rem;color:var(--text-muted);font-weight:300;">
-            📞 +91 ${CONFIG.phone}<br>
-            ✉ ${CONFIG.email}
+        <button class="close-btn" data-close-info>&times;</button>
+      </div>
+      <div class="modal-body" id="infoBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Herbaya Night Cream",
+        price: 499,
+        image: "https://i.ibb.co/X6RCDdG/Herbaya-Skin-Co-skincare-jar.png",
+        description: "A nourishing night cream designed to support soft, healthy-looking skin. Helps improve skin texture and glow with regular use. Suitable for both men and women.",
+        category: "Night Care",
+        detailsTitle: "Benefits, Ingredients & How to Use",
+        steps: [
+          "✨ Benefits:",
+          "🌿 Helps improve skin texture",
+          "💧 Keeps skin soft & hydrated",
+          "🌙 Perfect for night care routine",
+          "👩‍🦰 Suitable for men & women",
+          "✨ Supports healthy-looking glow",
+          "",
+          "🧪 Ingredients:",
+          "Carnauba Wax, Bees Wax, Kojic Acid Dipalmitate, Lycopene, Malva Sylvestris Extract, Primula Veris Extract, Alchemilla Vulgaris Extract, Melissa Officinalis Extract, Niacinamide (Vitamin B3), Cetearyl Alcohol, Cetyl Alcohol, Octocrylene, Avobenzone, Methyl Paraben, Propyl Paraben, Permitted FD&C Colours.",
+          "",
+          "🧴 How to Use:",
+          "🧼 Clean your face properly before application",
+          "👆 Take a small amount on your fingertips",
+          "🧴 Apply evenly on face",
+          "🔄 Massage gently in circular motion",
+          "🌙 Use regularly at night for best results"
+        ]
+      }
+    ];
+
+    let cart = [];
+
+    const productsGrid = document.getElementById('productsGrid');
+    const cartButton = document.getElementById('cartButton');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartItems = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkoutForm = document.getElementById('checkoutForm');
+    const infoModal = document.getElementById('infoModal');
+    const infoTitle = document.getElementById('infoTitle');
+    const infoPrice = document.getElementById('infoPrice');
+    const infoBody = document.getElementById('infoBody');
+
+    function formatPrice(price) {
+      return `₹${price.toLocaleString('en-IN')}`;
+    }
+
+    function renderProducts() {
+      productsGrid.innerHTML = products.map(product => `
+        <article class="product-card">
+          <div class="product-image-wrap">
+            <img class="product-image" src="${product.image}" alt="${product.name}" />
+          </div>
+          <div class="product-content">
+            <div class="product-title-row">
+              <h3 class="product-title">${product.name}</h3>
+              <div class="product-price">${formatPrice(product.price)}</div>
+            </div>
+            <div class="product-meta">${product.category}</div>
+            <p class="product-desc">${product.description}</p>
+            <div class="product-actions">
+              <button class="btn info-btn" onclick="openInfo(${product.id})">More Info</button>
+              <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function addToCart(productId) {
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        const product = products.find(item => item.id === productId);
+        cart.push({ ...product, quantity: 1 });
+      }
+      renderCart();
+      cartDrawer.classList.add('active');
+    }
+
+    function updateQuantity(productId, change) {
+      cart = cart.map(item => item.id === productId ? { ...item, quantity: item.quantity + change } : item)
+                 .filter(item => item.quantity > 0);
+      renderCart();
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      renderCart();
+    }
+
+    function renderCart() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      cartCount.textContent = totalItems;
+      cartTotal.textContent = formatPrice(totalPrice);
+
+      if (!cart.length) {
+        cartItems.innerHTML = `<div class="empty-cart">Your cart is empty. Add a product to continue.</div>`;
+        return;
+      }
+
+      cartItems.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.name}" />
+          <div style="flex:1;">
+            <h4>${item.name}</h4>
+            <p>${formatPrice(item.price)} × ${item.quantity}</p>
+            <div class="cart-item-actions">
+              <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+              <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+              <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>`;
-}
+      `).join('');
+    }
 
-async function submitOrder() {
-  const name = document.getElementById('field-name').value.trim();
-  const email = document.getElementById('field-email').value.trim();
-  const phone = document.getElementById('field-phone').value.trim();
-  const address = document.getElementById('field-address').value.trim();
-  const notes = document.getElementById('field-notes').value.trim();
+    function openInfo(productId) {
+      const product = products.find(item => item.id === productId);
+      if (!product) return;
 
-  if (!name || !email || !phone || !address) {
-    showToast('Please fill in all required fields.');
-    return;
-  }
+      infoTitle.textContent = product.name;
+      infoPrice.textContent = formatPrice(product.price);
+      infoBody.innerHTML = `
+        <div class="info-layout">
+          <div>
+            <img src="${product.image}" alt="${product.name}" />
+          </div>
+          <div>
+            <p style="margin-top:0; color: var(--muted); line-height:1.7;">${product.description}</p>
+            <strong>${product.detailsTitle}</strong>
+            <ol class="steps">
+              ${product.steps.map(step => `<li>${step}</li>`).join('')}
+            </ol>
+          </div>
+        </div>
+      `;
+      infoModal.classList.add('active');
+    }
 
-  const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Placing Order…';
+    function closeInfo() {
+      infoModal.classList.remove('active');
+    }
 
-  const orderItems = cart.map(item => {
-    const p = PRODUCTS.find(pr => pr.id === item.id);
-    return `${p.name} x${item.qty} = ${CONFIG.currency}${(p.price * item.qty).toLocaleString('en-IN')}`;
-  }).join('\n');
+    function openCart() {
+      cartDrawer.classList.add('active');
+    }
 
-  const total = getCartTotal();
+    function closeCart() {
+      cartDrawer.classList.remove('active');
+    }
 
-  const formData = new FormData();
-  formData.append('name', name);
-  formData.append('email', email);
-  formData.append('phone', phone);
-  formData.append('address', address);
-  formData.append('notes', notes || 'None');
-  formData.append('order_items', orderItems);
-  formData.append('order_total', `${CONFIG.currency}${total.toLocaleString('en-IN')}`);
-  formData.append('store', CONFIG.storeName);
+    cartButton.addEventListener('click', openCart);
+    document.querySelectorAll('[data-close-cart]').forEach(el => el.addEventListener('click', closeCart));
+    document.querySelectorAll('[data-close-info]').forEach(el => el.addEventListener('click', closeInfo));
 
-  try {
-    const res = await fetch(CONFIG.formspreeUrl, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
+    checkoutForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!cart.length) {
+        alert('Your cart is empty. Please add at least one product.');
+        return;
+      }
+
+      const customerName = document.getElementById('customerName').value.trim();
+      const customerPhone = document.getElementById('customerPhone').value.trim();
+      const customerAddress = document.getElementById('customerAddress').value.trim();
+
+      const itemsText = cart.map(item => `${item.name} x ${item.quantity} - ${formatPrice(item.price * item.quantity)}`).join(', ');
+      const totalText = formatPrice(cart.reduce((sum, item) => sum + item.price * item.quantity, 0));
+      const whatsappMessage = encodeURIComponent(
+        `New order from Herbaya Skin Co.\n\nCustomer Name: ${customerName}\nPhone: ${customerPhone}\nAddress: ${customerAddress}\nItems: ${itemsText}\nTotal: ${totalText}`
+      );
+
+      window.open(`https://wa.me/917507896782?text=${whatsappMessage}`, '_blank');
+
+      checkoutForm.reset();
+      cart = [];
+      renderCart();
+      closeCart();
     });
 
-    if (res.ok) {
-      showSuccess();
-    } else {
-      btn.disabled = false;
-      btn.textContent = 'Place Order →';
-      showToast('Something went wrong. Please try again.');
-    }
-  } catch (e) {
-    btn.disabled = false;
-    btn.textContent = 'Place Order →';
-    showToast('Network error. Please check your connection.');
-  }
-}
-
-function showSuccess() {
-  cart = [];
-  saveCart();
-  const overlay = document.getElementById('success-overlay');
-  overlay.classList.add('show');
-  let secs = 3;
-  const cd = document.getElementById('success-countdown');
-  const interval = setInterval(() => {
-    secs--;
-    cd.textContent = `Redirecting in ${secs} second${secs !== 1 ? 's' : ''}…`;
-    if (secs <= 0) {
-      clearInterval(interval);
-      overlay.classList.remove('show');
-      navigate('#home');
-    }
-  }, 1000);
-}
-
-// ===== UTILS =====
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-function scrollToAbout() {
-  navigate('#home');
-  setTimeout(() => {
-    const el = document.getElementById('about-section');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, 200);
-}
-
-function toggleMenu() {
-  document.getElementById('nav-links').classList.toggle('open');
-}
-function closeMenu() {
-  document.getElementById('nav-links').classList.remove('open');
-}
-
-// Init cart count
-updateCartCount();
-</script>
+    renderProducts();
+    renderCart();
+  </script>
 </body>
 </html>
