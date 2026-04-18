@@ -230,13 +230,13 @@
   display: block;
   object-fit: contain;
 }
-    
-
-.hero-badge {
+    .hero-badge {
   position: absolute;
-  left: 18px;
   right: 18px;
   bottom: 18px;
+  left: auto;
+  width: auto;
+  max-width: 260px;
   padding: 14px 16px;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.35);
@@ -245,19 +245,29 @@
   border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 20px 40px rgba(0,0,0,0.12);
   color: #1f2d25;
-}
+    }
+
+
 
     .hero-badge strong {
   display: block;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #1f2d25;
   margin-bottom: 4px;
+    }
+    @media (max-width: 768px) {
+  .hero-badge {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+    width: auto;
+    padding: 12px 14px;
+  }
     }
 
     .hero-badge span {
-  color: #3f5247;
+  display: block;
   font-size: 0.9rem;
+  line-height: 1.4;
     }
 
     .section {
@@ -1123,6 +1133,33 @@ img {
     width: 100%;
     max-width: 100%;
   }
+}
+    .hero-badge {
+  left: 16px !important;
+  right: 16px !important;
+  width: auto !important;
+  max-width: calc(100% - 32px) !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .hero-badge {
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    max-width: calc(100% - 24px) !important;
+    padding: 18px !important;
+  }
+}
+    .hero-media {
+  overflow: hidden;
+  border-radius: 28px;
+  position: relative;
+}
+
+.hero-media img {
+  width: 100%;
+  display: block;
 }
   </style>
 </head>
