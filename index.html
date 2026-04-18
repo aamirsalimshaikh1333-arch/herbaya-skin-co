@@ -1064,6 +1064,66 @@ body > * {
   position: relative;
   z-index: 1;
 }
+    .brand,
+.brand:link,
+.brand:visited,
+.brand:hover,
+.brand:active {
+  text-decoration: none !important;
+}
+
+.brand-title,
+.brand-subtitle,
+.brand-text,
+.brand * {
+  text-decoration: none !important;
+}
+    *,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container,
+.hero,
+.hero-copy,
+.hero-media,
+.hero-card {
+  max-width: 100%;
+}
+
+.hero {
+  overflow: hidden;
+}
+
+.hero-copy,
+.hero-media,
+.hero-card {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: min(100% - 24px, 1160px);
+    margin-inline: auto;
+  }
+
+  .hero-copy,
+  .hero-media,
+  .hero-card {
+    width: 100%;
+    max-width: 100%;
+  }
+}
   </style>
 </head>
 <body>
