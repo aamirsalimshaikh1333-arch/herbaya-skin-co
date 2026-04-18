@@ -77,10 +77,10 @@
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
     }
 
     .brand-mark {
@@ -102,18 +102,19 @@
     }
 
     .brand-title {
-  font-size: 1.3rem;
-  font-weight: 800;
-  letter-spacing: 0.2px;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
   line-height: 1;
-  color: #223127;
+  color: #1f2d25;
+  font-family: "Georgia", "Times New Roman", serif;
     }
-
     .brand-subtitle {
   display: block;
   color: rgba(62, 79, 68, 0.88);
-  font-size: 0.8rem;
-  margin-top: 4px;
+  font-size: 0.84rem;
+  margin-top: 5px;
+  letter-spacing: 0.2px;
     }
 
   .nav-links {
@@ -300,17 +301,47 @@
     .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
     .product-card,
-    .benefit-card,
-    .ingredient-card,
-    .review-card,
-    .faq-card,
-    .about-box,
-    .usage-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-    }
+.benefit-card,
+.ingredient-card,
+.review-card,
+.faq-card,
+.about-box,
+.usage-box {
+
+  background: rgba(255, 255, 255, 0.45);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 12px 35px rgba(30, 50, 35, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition: all 0.3s ease;
+}
+    .product-card:hover,
+.benefit-card:hover,
+.ingredient-card:hover,
+.review-card:hover,
+.faq-card:hover {
+
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 50px rgba(30, 50, 35, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+}
+    .product-desc,
+.benefit-card p,
+.ingredient-card p,
+.review-card p,
+.faq-card p {
+  color: rgba(30, 45, 35, 0.85);
+}
 
     
 
