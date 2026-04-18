@@ -1200,12 +1200,17 @@
 
 <input type="text" id="state" placeholder="State" required />
 
-<input type="text" id="pincode" placeholder="PIN Code" pattern="[0-9]{6}" required />
-        <form class="checkout-form" id="checkoutForm">
-          <input type="text" id="customerName" placeholder="Customer name" required />
-          <input type="tel" id="customerPhone" placeholder="Phone number" required />
-          <input type="text" id="customerAddress" placeholder="Delivery address" required />
-          <button class="btn btn-primary" type="submit">Send Order</button>
+<form class="checkout-form" id="checkoutForm">
+  <input type="text" id="customerName" placeholder="Customer name" required />
+  <input type="tel" id="customerPhone" placeholder="Phone number" required />
+
+  <input type="text" id="house" placeholder="House / Flat No." required />
+  <input type="text" id="area" placeholder="Street / Area" required />
+  <input type="text" id="city" placeholder="City" required />
+  <input type="text" id="state" placeholder="State" required />
+  <input type="text" id="pincode" placeholder="PIN Code" pattern="[0-9]{6}" required />
+
+  <button class="btn btn-primary" type="submit">Send Order</button>
           <div class="helper-text">
             When you click “Send Order”, the order will open directly in WhatsApp with the customer details and selected items.
           </div>
@@ -1294,7 +1299,7 @@
     function formatPrice(price) {
       return `₹${price.toLocaleString('en-IN')}`;
     }
-<input type="text" id="pincode" placeholder="PIN Code" pattern="[0-9]{6}" required />
+
     function renderProducts() {
       productsGrid.innerHTML = products.map(product => `
         <article class="product-card">
