@@ -34,14 +34,14 @@
 
     body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--text);
+  font-family: Arial, sans-serif;
+  color: #1f2d25;
   background:
-    linear-gradient(rgba(226, 244, 234, 0.82), rgba(226, 244, 234, 0.82)),
-    url("https://i.ibb.co/m7w3T6c/51363e2a-14d7-4723-8fe0-981293895c97.png");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+    radial-gradient(circle at top left, rgba(214,255,226,0.45), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255,230,240,0.35), transparent 30%),
+    linear-gradient(135deg, #f6fbf7, #eef7f1, #fdf8f6);
+  min-height: 100vh;
+  overflow-x: hidden;
     }
     img { max-width: 100%; display: block; }
 
@@ -921,9 +921,148 @@
         bottom: 12px;
       }
     }
+  /* ===== Soft Glass Bubbly Add-on ===== */
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(214,255,226,0.45), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255,230,240,0.35), transparent 30%),
+    linear-gradient(135deg, #f6fbf7, #eef7f1, #fdf8f6);
+  overflow-x: hidden;
+}
+
+.bg-bubble {
+  position: fixed;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floaty 6s ease-in-out infinite;
+}
+
+.bg-bubble.b1 {
+  width: 120px;
+  height: 120px;
+  top: 90px;
+  left: 18px;
+}
+
+.bg-bubble.b2 {
+  width: 180px;
+  height: 180px;
+  top: 320px;
+  right: 18px;
+  animation-delay: 1s;
+}
+
+.bg-bubble.b3 {
+  width: 100px;
+  height: 100px;
+  bottom: 70px;
+  left: 28px;
+  animation-delay: 2s;
+}
+
+.bg-bubble.b4 {
+  width: 150px;
+  height: 150px;
+  bottom: 120px;
+  right: 32px;
+  animation-delay: 1.5s;
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.navbar,
+.hero-card,
+.product-card,
+.benefit-card,
+.ingredient-card,
+.review-card,
+.faq-card,
+.drawer-panel,
+.checkout-form,
+.glass-card {
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.24);
+  box-shadow: 0 10px 35px rgba(40,60,40,0.08);
+}
+
+.navbar {
+  border-radius: 22px;
+  margin-top: 10px;
+}
+
+.product-card,
+.benefit-card,
+.ingredient-card,
+.review-card,
+.faq-card {
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover,
+.benefit-card:hover,
+.ingredient-card:hover,
+.review-card:hover,
+.faq-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 18px 40px rgba(30,50,35,0.12);
+}
+
+button,
+.btn,
+.hero-actions a,
+.product-actions a,
+.product-actions button {
+  border-radius: 999px !important;
+  transition: all 0.3s ease;
+}
+
+button:hover,
+.btn:hover,
+.hero-actions a:hover,
+.product-actions a:hover,
+.product-actions button:hover {
+  transform: translateY(-3px) scale(1.03);
+}
+
+img {
+  border-radius: 24px;
+}
+
+.hero-copy,
+.hero-media,
+.hero-badge,
+.brand,
+.nav-links a {
+  position: relative;
+  z-index: 2;
+}
+    .floating {
+  animation: floaty 4s ease-in-out infinite;
+    }
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
   </style>
 </head>
 <body>
+  <div class="bg-bubble b1"></div>
+<div class="bg-bubble b2"></div>
+<div class="bg-bubble b3"></div>
+<div class="bg-bubble b4"></div>
   <nav class="navbar">
     <div class="container nav-inner">
       <a href="#top" class="brand" aria-label="Herbaya Skin Co.">
@@ -946,7 +1085,7 @@
 
   <header class="hero" id="top">
     <div class="container hero-grid">
-      <div class="hero-copy">
+      <div class="hero-copy hero-card">
         <div class="eyebrow">🌿 Gentle care for skin & hair</div>
         <h1>Nourish your routine. Wake up looking fresh and cared for.</h1>
         <p>
@@ -1301,7 +1440,7 @@
 
     function renderProducts() {
       productsGrid.innerHTML = products.map(product => `
-        <article class="product-card">
+        <article class="product-card floating">
           <div class="product-image-wrap">
           <div class="product-badge">Best Seller</div>
             <img
