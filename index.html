@@ -1463,23 +1463,31 @@
     document.querySelectorAll('[data-close-info]').forEach(el => el.addEventListener('click', closeInfo));
 
     checkoutForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+  e.preventDefault();
 
-      if (!cart.length) {
-        alert('Your cart is empty. Please add at least one product.');
-        return;
-      }
+  if (!cart.length) {
+    alert('Your cart is empty. Please add at least one product.');
+    return;
+  }
 
-      const customerName = document.getElementById('customerName').value.trim();
-const house = document.getElementById('house').value.trim();
-const area = document.getElementById('area').value.trim();
-const city = document.getElementById('city').value.trim();
-const state = document.getElementById('state').value.trim();
-const pincode = document.getElementById('pincode').value.trim();
-const customerPhone = document.getElementById('customerPhone').value.trim();
+  const customerName = document.getElementById('customerName').value.trim();
+  const house = document.getElementById('house').value.trim();
+  const area = document.getElementById('area').value.trim();
+  const city = document.getElementById('city').value.trim();
+  const state = document.getElementById('state').value.trim();
+  const pincode = document.getElementById('pincode').value.trim();
+  const customerPhone = document.getElementById('customerPhone').value.trim();
 
-      const whatsappMessage = encodeURIComponent(
-`New Order - Herbaya Skin Co.
+  const itemsText = cart
+    .map(item => `${item.name} x ${item.quantity} - ${formatPrice(item.price * item.quantity)}`)
+    .join(', ');
+
+  const totalText = formatPrice(
+    cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  );
+
+  const whatsappMessage = encodeURIComponent(
+    `New Order - Herbaya Skin Co.
 
 👤 Name: ${customerName}
 📞 Phone: ${customerPhone}
@@ -1492,13 +1500,15 @@ ${city}, ${state} - ${pincode}
 ${itemsText}
 
 💰 Total: ${totalText}`
-);
-      window.open(`https://wa.me/917507896782?text=${whatsappMessage}`, '_blank');
-      checkoutForm.reset();
-      cart = [];
-      renderCart();
-      closeCart();
-    });
+  );
+
+  window.open(`https://wa.me/917507896782?text=${whatsappMessage}`, '_blank');
+
+  checkoutForm.reset();
+  cart = [];
+  renderCart();
+  closeCart();
+});
 
     renderProducts();
     renderCart();
