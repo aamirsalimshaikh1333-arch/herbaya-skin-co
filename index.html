@@ -1173,62 +1173,65 @@
   <a class="floating-whatsapp" href="https://wa.me/917507896782" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">✆</a>
 
   <div class="drawer" id="cartDrawer">
-    <div class="overlay" data-close-cart></div>
-    <div class="drawer-panel">
-      <div class="drawer-header">
-        <div>
-          <strong>Your Cart</strong>
-          <div style="color: var(--muted); font-size: 0.9rem; margin-top: 4px;">Review your selected products before sending the order.</div>
+  <div class="overlay" data-close-cart></div>
+  <div class="drawer-panel">
+
+    <div class="drawer-header">
+      <div>
+        <strong>Your Cart</strong>
+        <div style="color: var(--muted); font-size: 0.9rem; margin-top: 4px;">
+          Review your selected products before sending the order.
         </div>
-        <button class="close-btn" data-close-cart>&times;</button>
       </div>
-
-      <div class="drawer-body">
-        <div id="cartItems"></div>
-      </div>
-
-      
+      <button class="close-btn" data-close-cart>&times;</button>
     </div>
-  </div>
 
-  <div class="modal" id="infoModal">
-    <div class="overlay" data-close-info></div>
-    <div class="modal-panel">
-      <div class="modal-header">
-        <div>
-          <strong id="infoTitle">Product Information</strong>
-          <div id="infoPrice" style="color: var(--muted); margin-top: 4px;"></div>
+    <div class="drawer-body">
+      <div id="cartItems"></div>
+    </div>
+
+    <!-- ✅ FIXED FOOTER -->
+    <div class="cart-footer">
+      <div class="total-row">
+        <span>Total</span>
+        <span id="cartTotal">₹0</span>
+      </div>
+
+      <form class="checkout-form" id="checkoutForm">
+        <input type="text" id="customerName" placeholder="Customer name" required />
+        <input type="tel" id="customerPhone" placeholder="Phone number" required />
+
+        <input type="text" id="house" placeholder="House / Flat No." required />
+        <input type="text" id="area" placeholder="Street / Area" required />
+        <input type="text" id="city" placeholder="City" required />
+        <input type="text" id="state" placeholder="State" required />
+        <input type="text" id="pincode" placeholder="PIN Code" pattern="[0-9]{6}" required />
+
+        <button class="btn btn-primary" type="submit">Send Order</button>
+
+        <div class="helper-text">
+          When you click “Send Order”, the order will open directly in WhatsApp with the customer details and selected items.
         </div>
-        <button class="close-btn" data-close-info>&times;</button>
-      </div>
-      <div class="modal-body" id="infoBody"></div>
-
-      <div class="cart-footer">
-  <div class="total-row">
-    <span>Total</span>
-    <span id="cartTotal">₹0</span>
-  </div>
-
-  <form class="checkout-form" id="checkoutForm">
-    <input type="text" id="customerName" placeholder="Customer name" required />
-    <input type="tel" id="customerPhone" placeholder="Phone number" required />
-
-    <input type="text" id="house" placeholder="House / Flat No." required />
-    <input type="text" id="area" placeholder="Street / Area" required />
-    <input type="text" id="city" placeholder="City" required />
-    <input type="text" id="state" placeholder="State" required />
-    <input type="text" id="pincode" placeholder="PIN Code" pattern="[0-9]{6}" required />
-
-    <button class="btn btn-primary" type="submit">Send Order</button>
-
-    <div class="helper-text">
-      When you click “Send Order”, the order will open directly in WhatsApp with the customer details and selected items.
+      </form>
     </div>
-  </form>
-      </div>
-    </div>
-  </div>
 
+  </div>
+</div>
+
+<div class="modal" id="infoModal">
+  <div class="overlay" data-close-info></div>
+  <div class="modal-panel">
+    <div class="modal-header">
+      <div>
+        <strong id="infoTitle">Product Information</strong>
+        <div id="infoPrice" style="color: var(--muted); margin-top: 4px;"></div>
+      </div>
+      <button class="close-btn" data-close-info>&times;</button>
+    </div>
+    <div class="modal-body" id="infoBody"></div>
+  </div>
+</div>
+  
   <script>
     const products = [
       {
