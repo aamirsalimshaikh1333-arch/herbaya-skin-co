@@ -1162,6 +1162,17 @@ img {
   display: block;
 }
   </style>
+  .share-btn {
+  flex: 0 0 48px !important;
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.share-btn:hover {
+  background: var(--accent);
+}
 </head>
 <body>
   <div class="bg-bubble b1"></div>
@@ -1574,13 +1585,33 @@ img {
 
             <div class="product-actions">
               <button class="btn info-btn" onclick="openInfo(${product.id})">View Details</button>
-              <button class="btn btn-primary" onclick="addToCart(${product.id})">Order Now</button>
+<button class="btn share-btn" onclick="shareProduct(${product.id})">🔗</button>
+<button class="btn btn-primary" onclick="addToCart(${product.id})">Order Now</button>
             </div>
           </div>
         </article>
       `).join('');
     }
+function shareProduct(productId) {
+  const product = products.find(item => item.id === productId);
+  if (!product) return;
 
+  const productLink = `${window.location.origin}${window.location.pathname}?product=${product.id}`;
+
+  const shareText = `${product.name} - ${formatPrice(product.price)}
+Check this product from Herbaya Skin Co.`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: product.name,
+      text: shareText,
+      url: productLink
+    });
+  } else {
+    navigator.clipboard.writeText(productLink);
+    alert('Product link copied!');
+  }
+}
     function addToCart(productId) {
       const existing = cart.find(item => item.id === productId);
 
