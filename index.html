@@ -1172,6 +1172,134 @@ img {
 .share-btn:hover {
   background: var(--accent);
 }
+    /* ===== Luxury Premium Dark Upgrade ===== */
+
+body {
+  color: #f7f1e6;
+  background:
+    linear-gradient(rgba(15, 18, 14, 0.78), rgba(15, 18, 14, 0.82)),
+    url('https://i.ibb.co/9xWB0QB/51363e2a-14d7-4723-8fe0-981293895c97.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+:root {
+  --text: #f7f1e6;
+  --muted: rgba(247, 241, 230, 0.72);
+  --primary: #c8a45d;
+  --primary-dark: #a9843d;
+  --secondary: #d8b36a;
+  --accent: rgba(216, 179, 106, 0.16);
+  --accent-soft: rgba(255, 255, 255, 0.08);
+  --border: rgba(216, 179, 106, 0.22);
+  --card: rgba(18, 24, 18, 0.68);
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+}
+
+.navbar,
+.hero-card,
+.product-card,
+.benefit-card,
+.ingredient-card,
+.review-card,
+.faq-card,
+.about-box,
+.usage-box {
+  background: rgba(18, 24, 18, 0.72) !important;
+  border: 1px solid rgba(216, 179, 106, 0.22) !important;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.35) !important;
+}
+
+.brand-title,
+.hero-copy h1,
+.section-header h2,
+.product-title,
+.benefit-card h3,
+.ingredient-card h3,
+.review-card h3,
+.faq-card h3,
+.about-box strong {
+  color: #fff4dc !important;
+}
+
+.brand-subtitle,
+.hero-copy p,
+.section-header p,
+.product-desc,
+.benefit-card p,
+.ingredient-card p,
+.review-card p,
+.faq-card p,
+.about-box p,
+.usage-box p,
+.usage-steps {
+  color: rgba(255, 244, 220, 0.72) !important;
+}
+
+.brand-mark,
+.icon-pill {
+  background: linear-gradient(135deg, #d8b36a, #8f6a2e) !important;
+  color: #111 !important;
+  box-shadow: 0 12px 28px rgba(216,179,106,0.28);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #d8b36a, #8f6a2e) !important;
+  color: #111 !important;
+  box-shadow: 0 14px 35px rgba(216,179,106,0.28) !important;
+}
+
+.btn-secondary,
+.info-btn,
+.share-btn {
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(216,179,106,0.22) !important;
+  color: #fff4dc !important;
+}
+
+.product-price {
+  color: #d8b36a !important;
+}
+
+.product-meta,
+.product-highlight,
+.eyebrow,
+.hero-point {
+  background: rgba(216,179,106,0.14) !important;
+  border: 1px solid rgba(216,179,106,0.22) !important;
+  color: #fff4dc !important;
+}
+
+.product-image-wrap {
+  background: linear-gradient(180deg, rgba(255,244,220,0.12), rgba(216,179,106,0.08)) !important;
+}
+
+.hero-media {
+  background: rgba(18, 24, 18, 0.72) !important;
+  border: 1px solid rgba(216,179,106,0.22) !important;
+}
+
+.hero-badge {
+  background: rgba(18, 24, 18, 0.74) !important;
+  border: 1px solid rgba(216,179,106,0.25) !important;
+  color: #fff4dc !important;
+}
+
+.footer {
+  color: rgba(255,244,220,0.72) !important;
+  border-top: 1px solid rgba(216,179,106,0.22) !important;
+}
+
+.floating-cart {
+  background: linear-gradient(135deg, #d8b36a, #8f6a2e) !important;
+  color: #111 !important;
+}
+
+.cart-count {
+  background: #111 !important;
+  color: #d8b36a !important;
+}
   </style>
 </head>
 <body>
@@ -1711,9 +1839,7 @@ Check this product from Herbaya Skin Co.`;
             </div>
 
             <div class="info-buy">
-              <button class="btn btn-primary" onclick="addToCart(${product.id}); closeInfo();">
-                Add to Cart
-              </button>
+              <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
               <button class="btn btn-secondary" onclick="addToCart(${product.id}); closeInfo(); openCart();">
                 Order Now
               </button>
@@ -1737,7 +1863,20 @@ Check this product from Herbaya Skin Co.`;
       cartDrawer.classList.remove('active');
     }
 
-    cartButton.addEventListener('click', openCart);
+  cartButton.addEventListener('click', () => {
+  if (cart.length === 0) {
+    alert('Your cart is empty. Please add a product first.');
+    return;
+  }
+
+  openCart();
+  setTimeout(() => {
+    document.getElementById('checkoutForm').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }, 200);
+});
     document.querySelectorAll('[data-close-cart]').forEach(el => el.addEventListener('click', closeCart));
     document.querySelectorAll('[data-close-info]').forEach(el => el.addEventListener('click', closeInfo));
 
