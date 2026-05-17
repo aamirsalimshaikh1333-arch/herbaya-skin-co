@@ -1431,6 +1431,31 @@ body {
   background: rgba(216,179,106,0.12) !important;
   color: #fff4dc !important;
 }
+    .product-slider {
+  position: relative !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+
+.product-slider img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  opacity: 0 !important;
+  transition: opacity 0.6s ease !important;
+  border-radius: 20px !important;
+  filter: none !important;
+}
+
+.product-slider img.active {
+  opacity: 1 !important;
+}
   </style>
 </head>
 <body>
