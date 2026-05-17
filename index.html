@@ -2193,5 +2193,13 @@ function changeViewerImage(direction) {
     startProductSliders();
     renderCart();
   </script>
+  <div class="image-viewer" id="imageViewer">
+  <div class="image-viewer-box">
+    <button class="viewer-close" onclick="closeImageViewer()">×</button>
+    <button class="viewer-prev" onclick="changeViewerImage(-1)">‹</button>
+    <img class="image-viewer-img" id="viewerImage" src="" alt="Product image" />
+    <button class="viewer-next" onclick="changeViewerImage(1)">›</button>
+  </div>
+  </div>
 </body>
 </html>
