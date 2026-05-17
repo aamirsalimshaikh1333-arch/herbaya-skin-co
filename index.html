@@ -1753,6 +1753,13 @@ body {
         name: "Herbaya Night Cream",
         price: 499,
         image: "https://i.ibb.co/X6RCDdG/Herbaya-Skin-Co-skincare-jar.png",
+        images: [
+  "https://i.ibb.co/mrG63Zwy/Chat-GPT-Image-May-18-2026-12-32-14-AM.png",
+  "https://i.ibb.co/B0mMvFY/Chat-GPT-Image-May-18-2026-12-39-24-AM.png",
+  "https://i.ibb.co/LdX4Sb0P/Picsart-26-05-18-00-25-01-488.jpg",
+  "https://i.ibb.co/kP0JsRm/Chat-GPT-Image-May-17-2026-09-19-01-PM.png",
+  "https://i.ibb.co/nN91Cf0G/Chat-GPT-Image-May-17-2026-09-18-54-PM.png"
+],
         description: "A nourishing night cream designed to support soft, healthy-looking skin. Ideal for a comfortable night care routine with a clean and premium feel.",
         category: "Night Care",
         highlights: [
@@ -1814,32 +1821,49 @@ body {
     }
 
     function renderProducts() {
-      productsGrid.innerHTML = products.map(product => `
-        <article class="product-card floating">
-          <div class="product-image-wrap">
-          <div class="product-badge">Best Seller</div>
+  productsGrid.innerHTML = products.map(product => `
+    <article class="product-card floating">
+      <div class="product-image-wrap">
+        <div class="product-badge">Best Seller</div>
+
+        <div class="product-slider" id="slider-${product.id}">
+          ${(product.images || [product.image]).map((img, index) => `
             <img
-              class="product-image"
-              src="${product.image}"
+              src="${img}"
               alt="${product.name}"
+              class="${index === 0 ? 'active' : ''}"
+              onclick="openImageViewer(${product.id}, ${index})"
               onerror="this.src='https://via.placeholder.com/500x500?text=Product';"
             />
-          </div>
+          `).join('')}
+        </div>
+      </div>
 
-          <div class="product-content">
-            <div class="product-title-row">
-              <h3 class="product-title">${product.name}</h3>
-              <div class="product-price">${formatPrice(product.price)}</div>
-            </div>
+      <div class="product-content">
+        <div class="product-title-row">
+          <h3 class="product-title">${product.name}</h3>
+          <div class="product-price">${formatPrice(product.price)}</div>
+        </div>
 
-            <div class="product-meta">${product.category}</div>
+        <div class="product-meta">${product.category}</div>
 
-            <p class="product-desc">${product.description}</p>
+        <p class="product-desc">${product.description}</p>
 
-            <div class="product-highlights">
-              ${product.highlights.map(item => `
-                <div class="product-highlight">${item}</div>
-              `).join('')}
+        <div class="product-highlights">
+          ${product.highlights.map(item => `
+            <div class="product-highlight">${item}</div>
+          `).join('')}
+        </div>
+
+        <div class="product-actions">
+          <button class="btn info-btn" onclick="openInfo(${product.id})">View Details</button>
+          <button class="btn share-btn" onclick="shareProduct(${product.id})">🔗</button>
+          <button class="btn btn-primary" onclick="addToCart(${product.id})">Order Now</button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+    }
             </div>
 
             <div class="product-actions">
