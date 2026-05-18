@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aamirsalimshaikh1333-arch.github.io/herbaya-skin-co/sitemap.xml
